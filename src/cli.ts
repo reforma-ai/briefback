@@ -16,7 +16,7 @@ import {
   writeSetupConfig,
 } from './project';
 import {
-  AGENTFLOW_SKILLS,
+  BRIEFBACK_SKILLS,
   type RunSkills,
   runSkills,
   SKILLS_SOURCE,
@@ -27,7 +27,7 @@ export {
   GENERATED_MARKER,
   type SetupComponent,
 } from './project';
-export { AGENTFLOW_SKILLS } from './skills';
+export { BRIEFBACK_SKILLS } from './skills';
 
 interface Writer {
   write(value: string): unknown;
@@ -106,16 +106,16 @@ function parseOptions(args: string[], command: Command): string[] {
 }
 
 function help(): string {
-  return `AgentFlow ${packageJson.version}
+  return `Briefback ${packageJson.version}
 
 Usage:
-  agentflow init [--agent <name>] [--global] [--yes]
-  agentflow update [--global | --project] [--yes]
-  agentflow --version
+  briefback init [--agent <name>] [--global] [--yes]
+  briefback update [--global | --project] [--yes]
+  briefback --version
 
 Commands:
-  init      Install the AgentFlow skill, then optionally the docs
-  update    Update AgentFlow, installing it first when needed
+  init      Install the Briefback skill, then optionally the docs
+  update    Update Briefback, installing it first when needed
 
 The skills CLI handles agent, scope, and installation choices.
 `;
@@ -123,12 +123,12 @@ The skills CLI handles agent, scope, and installation choices.
 
 async function promptDocs(): Promise<boolean | null> {
   const selected = await select({
-    message: 'Set up AgentFlow docs?',
+    message: 'Set up Briefback docs?',
     options: [
       {
         value: true,
         label: 'Yes',
-        hint: 'AGENTFLOW.md + pointer to it in AGENTS.md',
+        hint: 'BRIEFBACK.md + pointer to it in AGENTS.md',
       },
       {
         value: false,
@@ -140,7 +140,7 @@ async function promptDocs(): Promise<boolean | null> {
   });
 
   if (isCancel(selected)) {
-    cancel('AgentFlow setup cancelled.');
+    cancel('Briefback setup cancelled.');
     return null;
   }
 
@@ -155,7 +155,7 @@ export async function runCli(
     stderr = process.stderr,
     promptDocs: selectDocs = promptDocs,
     runSkills: executeSkills = runSkills,
-    workflow = readFileSync(resolve(packageRoot, 'AGENTFLOW.md'), 'utf8'),
+    workflow = readFileSync(resolve(packageRoot, 'BRIEFBACK.md'), 'utf8'),
   }: CliDependencies = {},
 ): Promise<number> {
   const [command, ...optionArgs] = args;
@@ -177,7 +177,7 @@ export async function runCli(
 
   try {
     const forwarded = parseOptions(optionArgs, command);
-    const workflowPath = resolve(cwd, 'AGENTFLOW.md');
+    const workflowPath = resolve(cwd, 'BRIEFBACK.md');
     const config = readSetupConfig(cwd);
     const legacyInstall = !config && isGeneratedWorkflow(workflowPath);
     const installing = command === 'init' || (!config && !legacyInstall);
@@ -194,13 +194,13 @@ export async function runCli(
         'add',
         SKILLS_SOURCE,
         '--skill',
-        ...AGENTFLOW_SKILLS,
+        ...BRIEFBACK_SKILLS,
         ...installOptions,
       ]);
 
       if (status !== 0) {
         stderr.write(
-          `AgentFlow skill install failed with exit code ${status}.\n`,
+          `Briefback skill install failed with exit code ${status}.\n`,
         );
         return status;
       }
@@ -209,7 +209,7 @@ export async function runCli(
 
       if (wantDocs === null) {
         writeSetupConfig(cwd, ['skills']);
-        finish('AgentFlow skill installed.', stdout);
+        finish('Briefback skill installed.', stdout);
         return 0;
       }
 
@@ -223,13 +223,13 @@ export async function runCli(
     if (!installing && components.includes('skills')) {
       const status = executeSkills([
         'update',
-        ...AGENTFLOW_SKILLS,
+        ...BRIEFBACK_SKILLS,
         ...forwarded,
       ]);
 
       if (status !== 0) {
         stderr.write(
-          `AgentFlow skill update failed with exit code ${status}.\n`,
+          `Briefback skill update failed with exit code ${status}.\n`,
         );
         return status;
       }
@@ -246,7 +246,7 @@ export async function runCli(
     writeSetupConfig(cwd, components);
 
     finish(
-      installing ? 'AgentFlow initialized.' : 'AgentFlow updated.',
+      installing ? 'Briefback initialized.' : 'Briefback updated.',
       stdout,
     );
 

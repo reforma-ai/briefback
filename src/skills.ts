@@ -3,9 +3,9 @@ import { readFileSync } from 'node:fs';
 import { createRequire } from 'node:module';
 import { dirname, resolve } from 'node:path';
 
-export const AGENTFLOW_SKILLS = ['agentflow'];
+export const BRIEFBACK_SKILLS = ['briefback'];
 
-export const SKILLS_SOURCE = 'reforma-ai/agentflow';
+export const SKILLS_SOURCE = 'reforma-ai/briefback';
 
 interface SkillsPackage {
   bin: string | Record<string, string>;

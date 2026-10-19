@@ -1,6 +1,6 @@
-# AgentFlow
+# Briefback
 
-Larger than a quick fix: follow @AGENTFLOW.md.
+Larger than a quick fix: follow @BRIEFBACK.md.
 
 This repo publishes reusable skills from `skills/`. Consuming repos install them
-with the AgentFlow CLI or the `skills` CLI.
+with the Briefback CLI or the `skills` CLI.

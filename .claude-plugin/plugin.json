@@ -1,6 +1,6 @@
 {
-  "name": "agentflow",
-  "version": "2.1.0",
+  "name": "briefback",
+  "version": "2.0.2",
   "description": "An opinionated workflow for shipping production-ready changes with coding agents.",
   "author": {
     "name": "Reforma, Inc.",

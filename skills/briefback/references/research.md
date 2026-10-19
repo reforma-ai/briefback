@@ -11,7 +11,7 @@ findings should survive context compaction or move to another chat.
 Run the investigation in a **subagent**. The parent chat keeps the question,
 not the search trail.
 
-**Parent.** Pick the slug (reuse the existing `.agentflow/<slug>/research/`
+**Parent.** Pick the slug (reuse the existing `.briefback/<slug>/research/`
 directory when continuing). Launch one subagent with the question, this
 skill's rules, and the output path. When it finishes, read only `index.md`.
 Reply with that path and a short takeaway.
@@ -27,7 +27,7 @@ reply from `index.md` only.
 Write to:
 
 ```text
-.agentflow/<slug>/research/
+.briefback/<slug>/research/
 ├── index.md
 └── <topic>.md
 ```
@@ -56,7 +56,7 @@ larger research, keep details out of `index.md` and link to the topic pages.
 Write the notes in the **project's** language. Read it from README, `AGENTS.md`,
 or other human docs in the repo. Missing, mixed, or English → English.
 
-The chat language does not decide this. Existing `.agentflow/` notes do not
+The chat language does not decide this. Existing `.briefback/` notes do not
 either — they may be wrong. The reply to the user can match theirs.
 
 ## Research the code

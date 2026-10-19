@@ -3,7 +3,7 @@
   "configVersion": 1,
   "workspaces": {
     "": {
-      "name": "@reforma/agentflow",
+      "name": "@reforma/briefback",
       "dependencies": {
         "@clack/prompts": "1.7.0",
         "skills": "1.5.23",

@@ -1,18 +1,18 @@
 ---
-name: agentflow
+name: briefback
 description: >-
   Always use for software work larger than a quick fix, even when the user does
-  not mention AgentFlow. Follow the ordered delivery loop: Research → Grill →
+  not mention Briefback. Follow the ordered delivery loop: Research → Grill →
   Plan → Stage → Review → Commit, skipping only phases whose entry conditions
   are already satisfied and repeating Stage → Review → Commit until the work is
   done.
-  Also use when the user invokes AgentFlow, requests one of its modes, or project
+  Also use when the user invokes Briefback, requests one of its modes, or project
   guidance requires it. Route natural-language requests to the matching mode and
   load only that mode's reference. Do not use for ordinary quick fixes.
 license: MIT
 ---
 
-# AgentFlow
+# Briefback
 
 One entrypoint for an ordered development loop:
 
@@ -24,8 +24,8 @@ Research → Grill → Plan → Stage → Review → Commit
 
 ## Default behavior
 
-Do not wait for an explicit `/agentflow` invocation. For any software change
-larger than a quick fix, load AgentFlow, identify the earliest necessary phase,
+Do not wait for an explicit `/briefback` invocation. For any software change
+larger than a quick fix, load Briefback, identify the earliest necessary phase,
 and follow the loop from there. The task itself is enough to activate the skill.
 
 The user's words choose the mode; exact command syntax is optional. A request
@@ -46,8 +46,8 @@ mode.
 | `document` | Finished work should become durable project documentation | [references/document.md](references/document.md) |
 
 Accept `code-review` as an alias for `review`. Commands may include a target or
-brief in the same request, such as `$agentflow research authentication` or
-`/agentflow review the current diff`.
+brief in the same request, such as `$briefback research authentication` or
+`/briefback review the current diff`.
 
 `continue` and `implement` resume delivery rather than load another playbook.
 Read the current plan and latest handoff when they exist, then implement only
@@ -66,7 +66,7 @@ only when the user or project requires test-first work.
   stages across multiple areas. Load later references only when their phase
   begins.
 - With no mode or actionable request, inspect the conversation and existing
-  `.agentflow/` artifacts, then recommend the next mode. Do not begin a
+  `.briefback/` artifacts, then recommend the next mode. Do not begin a
   substantial phase merely because it might be useful.
 - If two modes genuinely fit and lead to different immediate work, ask one
   short question. Otherwise choose the narrower mode.
@@ -77,7 +77,7 @@ only when the user or project requires test-first work.
 - Preserve the user's scope and authority. A mode changes the method, not what
   actions are authorized.
 - Keep research, plans, and handoffs under one
-  `.agentflow/<feature>/` slug so later phases can find them.
+  `.briefback/<feature>/` slug so later phases can find them.
 - Settle decisions before implementation. Use Plan only when sequencing, scope
   tracking, or handoff needs a durable artifact. Implement one coherent stage
   at a time, then review it before committing and starting the next. A stage is
