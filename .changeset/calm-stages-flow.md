@@ -1,5 +1,5 @@
 ---
-'@reforma/agentflow': minor
+'@reforma/briefback': minor
 ---
 
 Treat implementation stages as review boundaries rather than independently

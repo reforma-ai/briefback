@@ -1,11 +1,11 @@
 {
-  "name": "agentflow",
+  "name": "briefback",
   "interface": {
-    "displayName": "AgentFlow"
+    "displayName": "Briefback"
   },
   "plugins": [
     {
-      "name": "agentflow",
+      "name": "briefback",
       "source": {
         "source": "local",
         "path": "./"

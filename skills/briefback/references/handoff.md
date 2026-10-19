@@ -4,7 +4,7 @@ Use this after an implementation stage when the next stage will continue in a
 fresh chat. Write a file the next chat can attach. The handoff, plus the plan
 when one exists, is the durable source of truth.
 
-Loop: repo-root `AGENTFLOW.md`.
+Loop: repo-root `BRIEFBACK.md`.
 
 ## Steps
 
@@ -17,7 +17,7 @@ Loop: repo-root `AGENTFLOW.md`.
    later stages. Do not leave the next chat to discover leftover files.
 4. **Next stage.** Title + done-when from the updated plan or confirmed reading.
    One stage only.
-5. **Write** `.agentflow/<slug>/handoff.md` (create dirs). Reuse the same slug
+5. **Write** `.briefback/<slug>/handoff.md` (create dirs). Reuse the same slug
    for the feature so the next chat overwrites this file. Not OS temp.
 6. **Print** the path and what the fresh chat should attach.
 
@@ -54,11 +54,11 @@ none
 
 <title>
 done when: <criterion>
-suggested: AgentFlow tdd / review, plus project craft skills for the next slice
+suggested: Briefback tdd / review, plus project craft skills for the next slice
 ```
 
 ## Done
 
-Handoff is complete when `.agentflow/<slug>/handoff.md` exists, the plan matches
+Handoff is complete when `.briefback/<slug>/handoff.md` exists, the plan matches
 what shipped when one exists, Next stage is one heading, and the printed path is
 what the fresh chat should attach.

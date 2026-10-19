@@ -1,10 +1,10 @@
-# @reforma/agentflow
+# @reforma/briefback
 
 ## 2.0.2
 
 ### Patch Changes
 
-- 4205a94: Activate AgentFlow automatically for software work larger than a quick fix and expose the ordered delivery loop in the skill description.
+- 4205a94: Activate Briefback automatically for software work larger than a quick fix and expose the ordered delivery loop in the skill description.
 
 ## 2.0.1
 
@@ -16,7 +16,7 @@
 
 ### Major Changes
 
-- fc3bad8: Replace the separate workflow skills with one `agentflow` skill that routes research, grill, plan, TDD, review, handoff, and documentation requests to focused references.
+- fc3bad8: Replace the separate workflow skills with one `briefback` skill that routes research, grill, plan, TDD, review, handoff, and documentation requests to focused references.
 
 ### Minor Changes
 
@@ -25,7 +25,7 @@
 ### Patch Changes
 
 - 0da77d7: Restore the README banner, badges, and visual section markers, and include the banner asset in the published npm package.
-- 268cac9: Link AgentFlow and Prosecraft from their READMEs so users can discover the companion writing skills.
+- 268cac9: Link Briefback and Prosecraft from their READMEs so users can discover the companion writing skills.
 - b2382a7: Run `/code-review` in one subagent that fixes locally and returns what it changed versus what needs a decision.
 - 444ce96: Rename GH Org
 - c43464a: Smooth an overly segmented paragraph in the README.
@@ -43,7 +43,7 @@
 
 ### Patch Changes
 
-- 7181b3d: Write research notes and document pages in the project's language (default English), not the chat or `.agentflow/` files.
+- 7181b3d: Write research notes and document pages in the project's language (default English), not the chat or `.briefback/` files.
 
 ## 1.2.1
 
@@ -56,7 +56,7 @@
 ### Minor Changes
 
 - 476576d: Add `/document` to turn research, a plan, or a shipped change into a project
-  page, then remove the packaged `.agentflow/` working files.
+  page, then remove the packaged `.briefback/` working files.
 
 ### Patch Changes
 
@@ -88,17 +88,17 @@
 
 ### Patch Changes
 
-- 33bf112: Replace AGENTFLOW.md on init and update instead of failing when a copy already exists.
+- 33bf112: Replace BRIEFBACK.md on init and update instead of failing when a copy already exists.
 - 33bf112: Bugfixes
 
 ## 1.1.1
 
 ### Patch Changes
 
-- 9cfa7c2: Install all skills first with `--skill '*'`, then ask about AGENTFLOW.md and the
+- 9cfa7c2: Install all skills first with `--skill '*'`, then ask about BRIEFBACK.md and the
   AGENTS.md pointer.
 - 9cfa7c2: Sharpen skill descriptions for model invocation and align handoff and
-  code-review with the AgentFlow loop.
+  code-review with the Briefback loop.
 
 ## 1.1.0
 
@@ -106,18 +106,18 @@
 
 - 2638741: Add interactive first-time setup, delegate skill installation choices to the
   skills CLI, install a concise workflow reference for coding agents, and leave
-  `.agentflow/` version control policy to each project.
+  `.briefback/` version control policy to each project.
 
 ### Patch Changes
 
-- 2638741: Let `agentflow update` initialize projects that do not have AgentFlow yet.
+- 2638741: Let `briefback update` initialize projects that do not have Briefback yet.
 
 ## 1.0.0
 
 ### Major Changes
 
-- ee821e8: AgentFlow 1.0.0
+- ee821e8: Briefback 1.0.0
 
 ### Minor Changes
 
-- ee821e8: Publish the first AgentFlow CLI and reusable skill collection.
+- ee821e8: Publish the first Briefback CLI and reusable skill collection.

@@ -11,8 +11,8 @@ An explicit Plan request still writes a plan. Do not implement.
 ## Where
 
 - **Native planner** (built-in plan UI): plan artifact / reply only. No
-  `.agentflow/` files.
-- **Otherwise:** `.agentflow/<slug>/plan.md` (kebab-case from the feature;
+  `.briefback/` files.
+- **Otherwise:** `.briefback/<slug>/plan.md` (kebab-case from the feature;
   reuse the slug). Print the path.
 - A plan file already on the branch: update that file.
 

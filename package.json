@@ -1,11 +1,11 @@
 {
-  "name": "@reforma/agentflow",
+  "name": "@reforma/briefback",
   "version": "2.0.2",
   "description": "An opinionated workflow for shipping production-ready changes with coding agents.",
   "author": "Reforma, Inc. <dev@reforma.ai>",
   "type": "module",
   "bin": {
-    "agentflow": "bin/agentflow.js"
+    "briefback": "bin/briefback.js"
   },
   "files": [
     "assets",
@@ -13,13 +13,13 @@
     "skills",
     "plugin.json",
     ".claude-plugin",
-    "AGENTFLOW.md",
+    "BRIEFBACK.md",
     "README.md",
     "LICENSE"
   ],
   "scripts": {
     "prepare": "node -e \"if (process.env.CI === 'true' || process.env.SKIP_GIT_HOOKS === '1') process.exit(0); require('child_process').execSync('bunx simple-git-hooks', {stdio:'inherit'})\"",
-    "build": "bun build src/bin.ts --target=node --outfile=bin/agentflow.js --external skills --external @clack/prompts",
+    "build": "bun build src/bin.ts --target=node --outfile=bin/briefback.js --external skills --external @clack/prompts",
     "typecheck": "tsc --noEmit",
     "changeset": "bunx @changesets/cli",
     "version-packages": "bunx @changesets/cli version && node scripts/sync-plugin-versions.mjs",
@@ -33,10 +33,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/reforma-ai/agentflow.git"
+    "url": "git+https://github.com/reforma-ai/briefback.git"
   },
-  "homepage": "https://github.com/reforma-ai/agentflow#readme",
-  "bugs": "https://github.com/reforma-ai/agentflow/issues",
+  "homepage": "https://github.com/reforma-ai/briefback#readme",
+  "bugs": "https://github.com/reforma-ai/briefback/issues",
   "keywords": [
     "agent-skills",
     "coding-agents",

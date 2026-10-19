@@ -1,5 +1,5 @@
 {
-  "name": "agentflow",
+  "name": "briefback",
   "owner": {
     "name": "Reforma, Inc.",
     "email": "dev@reforma.ai"
@@ -9,7 +9,7 @@
   },
   "plugins": [
     {
-      "name": "agentflow",
+      "name": "briefback",
       "source": "./",
       "description": "An opinionated workflow for shipping production-ready changes with coding agents."
     }

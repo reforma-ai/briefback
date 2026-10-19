@@ -1,15 +1,19 @@
-# AgentFlow
+# Briefback
 
-An opinionated loop for shipping changes with coding agents: research when needed, challenge the decisions, then implement and review one coherent stage at a time.
+**Website:** [briefback.reforma.run](https://briefback.reforma.run)
+
+Just describe what you want to build or change. Briefback guides your coding agent from research to reviewable code, choosing the next step as the task unfolds.
+
+Grill is the core: the agent investigates the code, challenges assumptions, and works through open decisions with you until you share a clear understanding of the task. After you confirm the decisions, it plans when needed, then implements and reviews one coherent stage at a time.
 
 <p align="left">
-  <a href="https://www.npmjs.com/package/@reforma/agentflow"><img src="https://img.shields.io/npm/v/@reforma/agentflow.svg" alt="npm"></a>
-  <a href="LICENSE"><img src="https://img.shields.io/npm/l/@reforma/agentflow.svg" alt="MIT License"></a>
-  <a href="https://www.skills.sh/reforma-ai/agentflow"><img src="https://skills.sh/b/reforma-ai/agentflow" alt="skills.sh"></a>
+  <a href="https://www.npmjs.com/package/@reforma/briefback"><img src="https://img.shields.io/npm/v/@reforma/briefback.svg" alt="npm"></a>
+  <a href="LICENSE"><img src="https://img.shields.io/npm/l/@reforma/briefback.svg" alt="MIT License"></a>
+  <a href="https://www.skills.sh/reforma-ai/briefback"><img src="https://skills.sh/b/reforma-ai/briefback" alt="skills.sh"></a>
 </p>
 
 <p align="center">
-  <img src="assets/banner.png" alt="AgentFlow — an opinionated workflow for coding agents" width="100%">
+  <img src="assets/banner.png" alt="Briefback — an opinionated workflow for coding agents" width="100%">
 </p>
 
 ```text
@@ -19,119 +23,113 @@ Research → Grill → Plan → Stage → Review → Commit
 ```
 
 ```bash
-npx @reforma/agentflow init
+npx @reforma/briefback init
 ```
+
+During setup, choose your coding agent (Codex, Claude Code, Cursor, or another supported agent) and whether to add project workflow docs. Then give the agent a task in ordinary language.
 
 ## Why
 
-An open-ended prompt is usually enough for a tiny change. On larger work, scope grows, decisions disappear into chat history, and the model starts guessing. Edge cases get skipped, validation weakens, or the implementation settles on the wrong abstraction. Start a new chat and the reasoning is gone too.
+An open-ended prompt is enough for a tiny change. On larger work, scope and decisions can disappear into chat history. The agent may miss edge cases or keep building on a wrong assumption, especially after a fresh chat.
 
-Spec-driven frameworks such as OpenSpec and Spec Kit solve this by moving intent into proposals, requirements, designs, and task trees. That works, but it comes with a process the whole team has to maintain. For a small fix, the ceremony can cost more than the change.
+Briefback combines the best of Grill and spec-driven development. Six months of shipping real PRs with agents shaped three constraints:
 
-AgentFlow is what survived six months of shipping real PRs with agents. It keeps three constraints:
-
-- **Specs are working artifacts.** Keep research and plans as durable specs, leave them local, or delete them after the PR. Git and pull requests stay at the center of the workflow.
-- **The process starts with the task.** Developers do not need to learn a separate artifact tree before they can use it. The agent carries the workflow after the initial clarification.
-- **One stage at a time.** Settle decisions before coding, keep implementation to one coherent review boundary, and review that stage before starting the next. A stage is not necessarily a pull request or release. Optional steps can drop out; the order does not change.
+- **Reach a shared understanding before coding.** Grill makes the agent explain its reading of the task, challenge assumptions, and surface decisions you may not have considered. You can correct the approach before it becomes an implementation.
+- **Start with the task.** Describe what you need in ordinary language. The agent chooses the relevant phases and carries the workflow, including research and clarification when needed.
+- **Keep each stage reviewable.** A plan preserves the sequence when work needs durable coordination. The agent implements and reviews one coherent stage before moving on, keeping scope manageable across long tasks and fresh chats.
 
 ## One skill, seven modes
 
-AgentFlow installs as one `/agentflow` skill. Choose a mode when you know the
-next step, or describe what you want in ordinary language and let AgentFlow
-route the request.
+Briefback installs as one skill. Describe your task in ordinary language; the agent selects the relevant mode and follows the workflow from there.
 
-You do not need to invoke AgentFlow by name. Its activation description tells
-agents to load it automatically for software work larger than a quick fix, find
-the earliest necessary phase, and follow the loop from there. Explicit commands
-remain useful when you want to force a particular mode.
+For work larger than a quick fix, it starts at the earliest necessary phase. Research gathers missing context, Grill settles open decisions, and a plan preserves the sequence when the work needs several stages.
 
-| Command | What it does |
-| --- | --- |
-| `/agentflow research` | Saves research that should survive the current chat |
-| `/agentflow grill` | Questions an idea until the important decisions are clear |
-| `/agentflow plan` | Records an ordered sequence of implementation stages |
-| `/agentflow tdd` | Works through one red-green slice at a time |
-| `/agentflow review` | Reviews and refactors the stage, then fixes defects |
-| `/agentflow handoff` | Saves the context needed to continue in another chat |
-| `/agentflow document` | Turns research, a plan, or a shipped change into a project page |
+You can also request a specific mode directly, in ordinary language or with an explicit command.
 
-The mode does not have to be literal. `/agentflow research this first` and
-`/agentflow let's grill this` route to the same references as the explicit
-commands. `/agentflow continue` resumes the first unfinished slice from the
-current plan or handoff.
+| Mode | What it does | Optional command |
+| --- | --- | --- |
+| Research | Saves findings that should survive the current chat | `/briefback research` |
+| Grill | Works through assumptions and open decisions with you | `/briefback grill` |
+| Plan | Records an ordered sequence of implementation stages | `/briefback plan` |
+| TDD | Works through one red-green slice at a time | `/briefback tdd` |
+| Review | Reviews and refactors a stage, then fixes defects | `/briefback review` |
+| Handoff | Saves the context needed to continue in another chat | `/briefback handoff` |
+| Document | Turns research, a plan, or a shipped change into a project page | `/briefback document` |
+
+Requests such as “Research authentication first,” “Review the changes,” or “Save a handoff for a fresh chat” select the same modes. “Continue” resumes the first unfinished stage from the current plan or handoff.
 
 ## 🔄 The loop
 
 You can skip research. Plan is for work whose sequence needs a durable artifact; obvious work can go from Grill straight to implementation.
 
-1. Learn how the area works, if needed.
-2. Sharpen the idea with Grill.
-3. Plan implementation stages when the sequence needs a durable artifact.
-4. Implement one stage.
-5. Run an agent review on that stage.
-6. Review the diff yourself, then commit.
-7. Refresh the context when needed.
-8. Archive or document the result.
+1. The agent learns how the area works, if needed.
+2. Grill sharpens the task with you.
+3. The agent plans stages when the sequence needs a durable artifact.
+4. The agent implements one stage.
+5. The agent reviews that stage, usually in a subagent.
+6. The agent checks the final diff and commits the stage.
+7. The agent saves a handoff when work moves to a fresh chat.
+8. The agent documents the result when requested.
 
-Repeat steps 4–7 until the confirmed scope is complete.
+The agent repeats implementation, review, and commit until the confirmed scope is complete.
 
 > [!TIP]
-> AgentFlow keeps research, plans, handoffs, and local setup state under `.agentflow/`.
-> Ignore the directory for a private workflow, or commit it when the team should share the artifacts.
+> Briefback keeps research, plans, handoffs, and local setup state under `.briefback/`.
+> Ignore the directory for a private workflow, commit artifacts when the team should share them, or remove working artifacts after the PR. Git and pull requests remain the record of shipped changes.
 
 ### 🔍 1. Learn how the area works
 
-Research does not require a skill. A prompt such as "Find out how authentication works in this project" may be enough before implementation.
+The agent can inspect the code without creating a research artifact. A prompt such as "Find out how authentication works in this project" may be enough before implementation.
 
-Use `/agentflow research` when the findings need to survive the chat. It runs the investigation in a subagent and writes the result to `.agentflow/<feature>/research/`, where it can be attached after context compaction or in a new chat.
+When findings need to survive the chat, the agent investigates in a subagent and writes them to `.briefback/<feature>/research/`. The findings can then be attached after context compaction or in a new chat.
 
 If you skip research, Grill can still surface missing context.
 
 ### 🔥 2. Sharpen the idea with Grill
 
-Grill is the core of AgentFlow. Run `/agentflow grill` after research, or start there when the area is already familiar.
+The agent starts Grill after research, or immediately when the area is already familiar.
 
 The agent explains its reading of the task, lists the assumptions and open decisions, and recommends an answer for each one. You confirm or correct the list. If an answer creates another important question, Grill keeps going.
 
-The result is a task the agent does not have to reinterpret while coding.
+Once you confirm the settled decisions, the agent chooses the next phase.
 
 ### 🗂️ 3. Plan implementation stages
 
-Planning follows Grill when the work needs durable coordination across several stages, non-obvious dependencies, or a likely context handoff. Obvious work that fits one or two compact stages skips Plan, even when it touches backend and frontend. The confirmed reading stays in the chat, and the agent offers to implement it. You can also run `/agentflow plan` directly.
+Planning follows Grill when the work needs durable coordination across several stages, non-obvious dependencies, or a likely context handoff. Work that fits one or two compact stages skips Plan, even when it touches backend and frontend. The confirmed reading stays in the chat, and the agent offers to implement it next.
 
-In a normal chat, Plan writes `.agentflow/<slug>/plan.md`. In Native Plan mode, the agent uses the client's planning flow and native plan artifact instead.
+In a normal chat, Plan writes `.briefback/<slug>/plan.md`. In Native Plan mode, the agent uses the client's planning flow and native plan artifact instead.
 
 The plan keeps the settled Grill decisions and divides the feature into coherent implementation stages. A stage has one clear outcome and a practical check; it is not a quota of files or lines, and it does not need to be an independently deployable release. One real pull request may contain several stages. Each stage records why it exists, its outcome, and which files it expects to change, so a fresh chat can pick it up without replaying the Grill conversation.
 
 Lower-level work often comes first: behavior-preserving refactoring, shared types, backend work, then the interface that uses them. That is a common sequence, not a template. Substantial backend and frontend changes normally stay in separate stages; a small, tightly coupled vertical change can stay together. Feature-local wiring should remain with the interface that first needs it.
 
-Keep the plan current as the work changes.
+The agent keeps the plan current as the work changes.
 
 ### 🛠️ 4. Implement one stage
 
-Implement the first unchecked stage and stop there. Without a plan, use the confirmed reading and keep the current stage small enough to review. You can stay in the current chat, start a fresh one, or write the code yourself. When context moves, bring the plan when present and the latest handoff. Use `/agentflow tdd` for test-first work.
+The agent implements and verifies the first unchecked stage, then sends it through review. Without a plan, it uses the confirmed reading and keeps the current stage small enough to review. The saved plan and handoff let work resume in a fresh chat. For test-first work, the agent follows the TDD mode.
 
-Load relevant skills named in `AGENTS.md`. If implementation spills into a later stage, update the plan when one exists instead of quietly expanding the current one.
+The agent loads relevant skills named in `AGENTS.md`. If implementation spills into a later stage, it updates the plan when one exists instead of quietly expanding the current one.
 
-Before review, update `plan.md` when one exists. Check off the stage only after its checks pass, then record any scope changes that affect later work.
+Before review, the agent updates `plan.md` when one exists. It checks off the stage only after its checks pass, then records any scope changes that affect later work.
 
 ### 🤖 5. Run an agent review
 
-Run `/agentflow review` on the completed stage. A subagent reviews what changed and why, fixes defects, and performs behavior-preserving refactors across the affected code when the structure needs it. That may include coordinated changes across several files. If the code is already well-shaped, the assessment says so instead of manufacturing a refactor. Concrete improvements outside the safe review scope return as follow-ups; product and contract calls return as decisions.
+Review normally runs in a subagent with the context of what changed and why. If the client cannot launch one, the main agent reviews the stage. The reviewer fixes defects and makes behavior-preserving refactors when the structure needs them. That may include coordinated changes across several files. If the code is already well-shaped, the assessment says so instead of manufacturing a refactor. Concrete improvements outside the safe review scope return as follow-ups; product and contract calls return as decisions.
 
 ### ✅ 6. Review and commit
 
-Read the diff yourself, then commit it through the project's normal workflow.
+The agent checks the final diff and commits the stage through the project's normal workflow.
 
 ### 🔄 7. Refresh the context
 
-Stay in the current chat while its context is useful. When it gets noisy, summarize it or start a fresh one. `/agentflow handoff` records what shipped, what changed, and which stage comes next.
+When unfinished work moves to a fresh chat, the agent saves a handoff with what shipped, what changed, and which stage comes next.
 
-Attach the plan when present and the handoff to the new chat, then return to step 4.
+The saved plan, when present, and the handoff let the agent resume implementation in the new chat.
 
 ### 📚 8. Archive or document the result
 
-Run `/agentflow document` when the work belongs in a durable project page. It updates an existing page for that domain when one exists; otherwise it writes to the project's docs tree or `.agentflow/docs/<domain>/`. It then removes the packaged `.agentflow/<slug>/` working files.
+When requested, the agent turns research, a plan, or shipped work into a durable project page. It updates an existing page for that domain when one exists; otherwise it writes to the project's docs tree or `.briefback/docs/<domain>/`. It then removes the packaged `.briefback/<slug>/` working files.
 
 Skip this step when the work does not need a page.
 
@@ -140,92 +138,76 @@ Skip this step when the work does not need a page.
 ### CLI
 
 ```bash
-npx @reforma/agentflow init
+npx @reforma/briefback init
 ```
 
-`init` installs the AgentFlow skill through the `skills` CLI, which asks for the target agents, scope, and installation method. AgentFlow then asks whether to set up project docs. If you choose yes, it writes `AGENTFLOW.md` and adds this pointer to `AGENTS.md`:
+`init` installs the Briefback skill through the `skills` CLI, which asks for the target agents, scope, and installation method. Briefback then asks whether to set up project docs. If you choose yes, it writes `BRIEFBACK.md` and adds this pointer to `AGENTS.md`:
 
 ```text
-Larger than a quick fix: follow @AGENTFLOW.md.
+Larger than a quick fix: follow @BRIEFBACK.md.
 ```
 
-Do not edit `AGENTFLOW.md` by hand. `init` and `update` replace it.
+Do not edit `BRIEFBACK.md` by hand. `init` and `update` replace it.
 
 Update the installed workflow:
 
 ```bash
-npx @reforma/agentflow@latest update
+npx @reforma/briefback@latest update
 ```
 
-After setup, `update` runs without prompts and refreshes only the parts selected during initialization. If AgentFlow is not installed yet, it starts the same setup as `init`.
+After setup, `update` runs without prompts and refreshes only the parts selected during initialization. If Briefback is not installed yet, it starts the same setup as `init`.
 
 Other useful forms:
 
 ```bash
-npx @reforma/agentflow init --global --agent cursor
-npx @reforma/agentflow init --yes
-npx skills add reforma-ai/agentflow --skill agentflow
+npx @reforma/briefback init --global --agent cursor
+npx @reforma/briefback init --yes
+npx skills add reforma-ai/briefback --skill briefback
 ```
 
 ### Agent plugin
 
-The portable Agent Plugin installs the same skill as one package. It reads it directly from `skills/`; there is no generated copy or separate plugin build. Use the CLI above when AgentFlow should also configure project docs and `AGENTFLOW.md`.
+The portable Agent Plugin installs the same skill as one package. It reads it directly from `skills/`; there is no generated copy or separate plugin build. Use the CLI above when Briefback should also configure project docs and `BRIEFBACK.md`.
 
 For Claude Code:
 
 ```bash
-claude plugin marketplace add reforma-ai/agentflow
-claude plugin install agentflow@agentflow
+claude plugin marketplace add reforma-ai/briefback
+claude plugin install briefback@briefback
 ```
 
 For Codex and ChatGPT:
 
 ```bash
-codex plugin marketplace add reforma-ai/agentflow
+codex plugin marketplace add reforma-ai/briefback
 ```
 
-Then install **AgentFlow** from the Plugins Directory. If your Codex CLI does not recognize `codex plugin`, update Codex or use the CLI installation.
+Then install **Briefback** from the Plugins Directory. If your Codex CLI does not recognize `codex plugin`, update Codex or use the CLI installation.
 
-Cursor supports the portable root manifest. Install AgentFlow from **Customize** when it is available in your marketplace; until then, use the CLI installation to add the same skill to Cursor.
+Cursor supports the portable root manifest. Install Briefback from **Customize** when it is available in your marketplace; until then, use the CLI installation to add the same skill to Cursor.
 
-Direct skill installs expose `/agentflow` or `$agentflow`, depending on the
-agent. Claude Code namespaces the plugin copy as `/agentflow:agentflow`.
-
-The root `plugin.json` and `skills/` directory are the source of truth. `.claude-plugin`, `.agents/plugins`, and `.cursor-plugin` contain client-specific distribution metadata. On release, keep the npm package, portable plugin, and Claude plugin versions in sync. Marketplace entries inherit the plugin version instead of duplicating it.
+Direct skill installs expose `/briefback` or `$briefback`, depending on the
+agent. Claude Code namespaces the plugin copy as `/briefback:briefback`.
 
 ## ⚖️ How it compares
 
-[OpenSpec](https://github.com/Fission-AI/OpenSpec) keeps proposals, requirements, designs, tasks, and completed changes in a spec tree. That fits teams whose development process centers on specs. AgentFlow keeps one plan and creates a handoff only when context moves.
+[OpenSpec](https://github.com/Fission-AI/OpenSpec) keeps a proposal, specs, design, and tasks under each proposed change. Briefback uses Grill to settle decisions and writes a plan when the work needs durable coordination.
 
-[Spec Kit](https://github.com/github/spec-kit) defines a phase-based process around a constitution, specs, plans, and tasks. AgentFlow orders the work without moving the rest of the development process into the framework.
+[Spec Kit](https://github.com/github/spec-kit) has a spec-driven feature flow through a project constitution, specification, plan, tasks, implementation, and convergence. Briefback starts from an ordinary task and selects phases as needed.
 
-An unstructured chat is still the shortest path for a small fix. AgentFlow starts to pay for itself when a change spans decisions, reviewable slices, or more than one context window.
+An unstructured chat is still the shortest path for a small fix. Briefback starts to pay for itself when a change spans decisions, reviewable slices, or more than one context window.
 
 ## 🔗 Related project
 
 Need better prose alongside the development workflow? [Prosecraft](https://github.com/reforma-ai/prosecraft) provides skills for humanizing drafts, writing technical documentation and UI copy, and creating agent skills.
 
-## 🚀 Release
+## Contributing
 
-Add a changeset for every publishable change:
-
-```bash
-bun run changeset
-```
-
-When the changeset reaches `main`, the publish workflow tests the package, updates its version and changelog, publishes to npm through trusted publishing, and commits the release files back to `main`. A separate job publishes the same version as an Agent Skills release on GitHub.
-
-Validate a release without publishing it:
-
-```bash
-gh skill publish --dry-run
-bun run test
-bun publish --dry-run
-```
+See [CONTRIBUTING.md](CONTRIBUTING.md) for packaging and release steps.
 
 ## 📄 License
 
-AgentFlow is available under the [MIT License](LICENSE).
+Briefback is available under the [MIT License](LICENSE).
 
 ## 👤 Maintainer
 

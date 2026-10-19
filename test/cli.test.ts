@@ -4,14 +4,14 @@ import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 
 import {
-  AGENTFLOW_SKILLS,
+  BRIEFBACK_SKILLS,
   AGENTS_POINTER,
   GENERATED_MARKER,
   runCli,
 } from '../src/cli';
 
 function project() {
-  const cwd = mkdtempSync(join(tmpdir(), 'agentflow-'));
+  const cwd = mkdtempSync(join(tmpdir(), 'briefback-'));
   let stdout = '';
   let stderr = '';
   const calls: string[][] = [];
@@ -44,18 +44,18 @@ test('init --yes installs the skill then docs without prompting', async () => {
 
     expect(status).toBe(0);
     expect(context.calls).toEqual([
-      ['add', 'reforma-ai/agentflow', '--skill', 'agentflow', '--yes'],
+      ['add', 'reforma-ai/briefback', '--skill', 'briefback', '--yes'],
     ]);
-    expect(readFileSync(join(context.cwd, 'AGENTFLOW.md'), 'utf8')).toBe(
+    expect(readFileSync(join(context.cwd, 'BRIEFBACK.md'), 'utf8')).toBe(
       `${GENERATED_MARKER}\n\n# Workflow\n`,
     );
-    expect(context.output().stdout).toContain('AgentFlow initialized');
+    expect(context.output().stdout).toContain('Briefback initialized');
     expect(readFileSync(join(context.cwd, 'AGENTS.md'), 'utf8')).toBe(
       `${AGENTS_POINTER}\n`,
     );
     expect(
       JSON.parse(
-        readFileSync(join(context.cwd, '.agentflow/config.json'), 'utf8'),
+        readFileSync(join(context.cwd, '.briefback/config.json'), 'utf8'),
       ),
     ).toEqual({
       version: 1,
@@ -71,7 +71,7 @@ test('init is idempotent and forwards install options', async () => {
   const context = project();
   writeFileSync(join(context.cwd, '.gitignore'), 'dist/\n');
   writeFileSync(
-    join(context.cwd, 'AGENTFLOW.md'),
+    join(context.cwd, 'BRIEFBACK.md'),
     `${GENERATED_MARKER}\n\nold\n`,
   );
 
@@ -92,16 +92,16 @@ test('init is idempotent and forwards install options', async () => {
     expect(context.calls).toEqual([
       [
         'add',
-        'reforma-ai/agentflow',
+        'reforma-ai/briefback',
         '--skill',
-        'agentflow',
+        'briefback',
         '--agent',
         'cursor',
         '--global',
         '--yes',
       ],
     ]);
-    expect(readFileSync(join(context.cwd, 'AGENTFLOW.md'), 'utf8')).toBe(
+    expect(readFileSync(join(context.cwd, 'BRIEFBACK.md'), 'utf8')).toBe(
       `${GENERATED_MARKER}\n\nnew\n`,
     );
   } finally {
@@ -109,14 +109,14 @@ test('init is idempotent and forwards install options', async () => {
   }
 });
 
-test('init replaces an existing AGENTFLOW.md', async () => {
+test('init replaces an existing BRIEFBACK.md', async () => {
   const context = project();
-  writeFileSync(join(context.cwd, 'AGENTFLOW.md'), '# My workflow\n');
+  writeFileSync(join(context.cwd, 'BRIEFBACK.md'), '# My workflow\n');
 
   try {
     const status = await runCli(['init', '--yes'], {
       ...context,
-      workflow: '# AgentFlow\n',
+      workflow: '# Briefback\n',
       promptDocs: () => {
         throw new Error('prompt should not run');
       },
@@ -128,10 +128,10 @@ test('init replaces an existing AGENTFLOW.md', async () => {
 
     expect(status).toBe(0);
     expect(context.calls).toEqual([
-      ['add', 'reforma-ai/agentflow', '--skill', 'agentflow', '--yes'],
+      ['add', 'reforma-ai/briefback', '--skill', 'briefback', '--yes'],
     ]);
-    expect(readFileSync(join(context.cwd, 'AGENTFLOW.md'), 'utf8')).toBe(
-      `${GENERATED_MARKER}\n\n# AgentFlow\n`,
+    expect(readFileSync(join(context.cwd, 'BRIEFBACK.md'), 'utf8')).toBe(
+      `${GENERATED_MARKER}\n\n# Briefback\n`,
     );
     expect(context.output().stderr).toBe('');
   } finally {
@@ -139,19 +139,19 @@ test('init replaces an existing AGENTFLOW.md', async () => {
   }
 });
 
-test('update replaces a user-owned AGENTFLOW.md when docs are configured', async () => {
+test('update replaces a user-owned BRIEFBACK.md when docs are configured', async () => {
   const context = project();
-  mkdirSync(join(context.cwd, '.agentflow'));
+  mkdirSync(join(context.cwd, '.briefback'));
   writeFileSync(
-    join(context.cwd, '.agentflow/config.json'),
+    join(context.cwd, '.briefback/config.json'),
     `${JSON.stringify({ version: 1, components: ['skills', 'workflow'] }, null, 2)}\n`,
   );
-  writeFileSync(join(context.cwd, 'AGENTFLOW.md'), '# Mine\n');
+  writeFileSync(join(context.cwd, 'BRIEFBACK.md'), '# Mine\n');
 
   try {
     const status = await runCli(['update', '--yes'], {
       ...context,
-      workflow: '# AgentFlow\n',
+      workflow: '# Briefback\n',
       runSkills: (args) => {
         context.calls.push(args);
         return 0;
@@ -159,9 +159,9 @@ test('update replaces a user-owned AGENTFLOW.md when docs are configured', async
     });
 
     expect(status).toBe(0);
-    expect(context.calls).toEqual([['update', ...AGENTFLOW_SKILLS, '--yes']]);
-    expect(readFileSync(join(context.cwd, 'AGENTFLOW.md'), 'utf8')).toBe(
-      `${GENERATED_MARKER}\n\n# AgentFlow\n`,
+    expect(context.calls).toEqual([['update', ...BRIEFBACK_SKILLS, '--yes']]);
+    expect(readFileSync(join(context.cwd, 'BRIEFBACK.md'), 'utf8')).toBe(
+      `${GENERATED_MARKER}\n\n# Briefback\n`,
     );
     expect(context.output().stderr).toBe('');
   } finally {
@@ -169,10 +169,10 @@ test('update replaces a user-owned AGENTFLOW.md when docs are configured', async
   }
 });
 
-test('update refreshes only the AgentFlow skill and generated workflow', async () => {
+test('update refreshes only the Briefback skill and generated workflow', async () => {
   const context = project();
   writeFileSync(
-    join(context.cwd, 'AGENTFLOW.md'),
+    join(context.cwd, 'BRIEFBACK.md'),
     `${GENERATED_MARKER}\n\nold\n`,
   );
 
@@ -188,18 +188,18 @@ test('update refreshes only the AgentFlow skill and generated workflow', async (
 
     expect(status).toBe(0);
     expect(context.calls).toEqual([
-      ['update', ...AGENTFLOW_SKILLS, '--project', '--yes'],
+      ['update', ...BRIEFBACK_SKILLS, '--project', '--yes'],
     ]);
-    expect(readFileSync(join(context.cwd, 'AGENTFLOW.md'), 'utf8')).toBe(
+    expect(readFileSync(join(context.cwd, 'BRIEFBACK.md'), 'utf8')).toBe(
       `${GENERATED_MARKER}\n\n# Current workflow\n`,
     );
-    expect(context.output().stdout).toContain('AgentFlow updated.');
+    expect(context.output().stdout).toContain('Briefback updated.');
   } finally {
     context.cleanup();
   }
 });
 
-test('update installs AgentFlow when the project is not initialized', async () => {
+test('update installs Briefback when the project is not initialized', async () => {
   const context = project();
 
   try {
@@ -214,12 +214,12 @@ test('update installs AgentFlow when the project is not initialized', async () =
 
     expect(status).toBe(0);
     expect(context.calls).toEqual([
-      ['add', 'reforma-ai/agentflow', '--skill', 'agentflow', '--yes'],
+      ['add', 'reforma-ai/briefback', '--skill', 'briefback', '--yes'],
     ]);
-    expect(readFileSync(join(context.cwd, 'AGENTFLOW.md'), 'utf8')).toBe(
+    expect(readFileSync(join(context.cwd, 'BRIEFBACK.md'), 'utf8')).toBe(
       `${GENERATED_MARKER}\n\n# Workflow\n`,
     );
-    expect(context.output().stdout).toContain('AgentFlow initialized');
+    expect(context.output().stdout).toContain('Briefback initialized');
   } finally {
     context.cleanup();
   }
@@ -236,7 +236,7 @@ test('init installs the skill before asking about docs', async () => {
       promptDocs: async () => {
         docsPrompted = true;
         expect(context.calls).toEqual([
-          ['add', 'reforma-ai/agentflow', '--skill', 'agentflow'],
+          ['add', 'reforma-ai/briefback', '--skill', 'briefback'],
         ]);
         return false;
       },
@@ -249,14 +249,14 @@ test('init installs the skill before asking about docs', async () => {
     expect(status).toBe(0);
     expect(docsPrompted).toBe(true);
     expect(() =>
-      readFileSync(join(context.cwd, 'AGENTFLOW.md'), 'utf8'),
+      readFileSync(join(context.cwd, 'BRIEFBACK.md'), 'utf8'),
     ).toThrow();
     expect(() =>
       readFileSync(join(context.cwd, 'AGENTS.md'), 'utf8'),
     ).toThrow();
     expect(
       JSON.parse(
-        readFileSync(join(context.cwd, '.agentflow/config.json'), 'utf8'),
+        readFileSync(join(context.cwd, '.briefback/config.json'), 'utf8'),
       ),
     ).toEqual({
       version: 1,
@@ -267,7 +267,7 @@ test('init installs the skill before asking about docs', async () => {
   }
 });
 
-test('accepting docs writes AGENTFLOW.md and AGENTS.md after the skill', async () => {
+test('accepting docs writes BRIEFBACK.md and AGENTS.md after the skill', async () => {
   const context = project();
   writeFileSync(join(context.cwd, 'AGENTS.md'), '# Project\n');
 
@@ -284,9 +284,9 @@ test('accepting docs writes AGENTFLOW.md and AGENTS.md after the skill', async (
 
     expect(status).toBe(0);
     expect(context.calls).toEqual([
-      ['add', 'reforma-ai/agentflow', '--skill', 'agentflow'],
+      ['add', 'reforma-ai/briefback', '--skill', 'briefback'],
     ]);
-    expect(readFileSync(join(context.cwd, 'AGENTFLOW.md'), 'utf8')).toBe(
+    expect(readFileSync(join(context.cwd, 'BRIEFBACK.md'), 'utf8')).toBe(
       `${GENERATED_MARKER}\n\n# Workflow\n`,
     );
     expect(readFileSync(join(context.cwd, 'AGENTS.md'), 'utf8')).toBe(
@@ -294,7 +294,7 @@ test('accepting docs writes AGENTFLOW.md and AGENTS.md after the skill', async (
     );
     expect(
       JSON.parse(
-        readFileSync(join(context.cwd, '.agentflow/config.json'), 'utf8'),
+        readFileSync(join(context.cwd, '.briefback/config.json'), 'utf8'),
       ),
     ).toEqual({
       version: 1,
@@ -334,10 +334,10 @@ test('AGENTS.md pointer is idempotent', async () => {
   }
 });
 
-test('AGENTS.md is left alone when @AGENTFLOW.md is already mentioned', async () => {
+test('AGENTS.md is left alone when @BRIEFBACK.md is already mentioned', async () => {
   const context = project();
   const existing =
-    '# Project\n\nSee @AGENTFLOW.md before large changes.\n';
+    '# Project\n\nSee @BRIEFBACK.md before large changes.\n';
   writeFileSync(join(context.cwd, 'AGENTS.md'), existing);
 
   try {
@@ -352,7 +352,7 @@ test('AGENTS.md is left alone when @AGENTFLOW.md is already mentioned', async ()
     expect(readFileSync(join(context.cwd, 'AGENTS.md'), 'utf8')).toBe(
       existing,
     );
-    expect(readFileSync(join(context.cwd, 'AGENTFLOW.md'), 'utf8')).toBe(
+    expect(readFileSync(join(context.cwd, 'BRIEFBACK.md'), 'utf8')).toBe(
       `${GENERATED_MARKER}\n\n# Workflow\n`,
     );
   } finally {
@@ -375,17 +375,17 @@ test('cancelled docs prompt keeps the installed skill', async () => {
 
     expect(status).toBe(0);
     expect(context.calls).toEqual([
-      ['add', 'reforma-ai/agentflow', '--skill', 'agentflow'],
+      ['add', 'reforma-ai/briefback', '--skill', 'briefback'],
     ]);
     expect(
       JSON.parse(
-        readFileSync(join(context.cwd, '.agentflow/config.json'), 'utf8'),
+        readFileSync(join(context.cwd, '.briefback/config.json'), 'utf8'),
       ),
     ).toEqual({
       version: 1,
       components: ['skills'],
     });
-    expect(context.output().stdout).toContain('AgentFlow skill installed');
+    expect(context.output().stdout).toContain('Briefback skill installed');
   } finally {
     context.cleanup();
   }
@@ -415,11 +415,11 @@ test('update quietly refreshes configured docs and the skill', async () => {
     });
 
     expect(status).toBe(0);
-    expect(context.calls).toEqual([['update', ...AGENTFLOW_SKILLS]]);
-    expect(readFileSync(join(context.cwd, 'AGENTFLOW.md'), 'utf8')).toBe(
+    expect(context.calls).toEqual([['update', ...BRIEFBACK_SKILLS]]);
+    expect(readFileSync(join(context.cwd, 'BRIEFBACK.md'), 'utf8')).toBe(
       `${GENERATED_MARKER}\n\nnew\n`,
     );
-    expect(context.output().stdout).toContain('AgentFlow updated');
+    expect(context.output().stdout).toContain('Briefback updated');
   } finally {
     context.cleanup();
   }
@@ -438,10 +438,10 @@ test('a delegated failure leaves project files untouched', async () => {
 
     expect(status).toBe(9);
     expect(() =>
-      readFileSync(join(context.cwd, 'AGENTFLOW.md'), 'utf8'),
+      readFileSync(join(context.cwd, 'BRIEFBACK.md'), 'utf8'),
     ).toThrow();
     expect(() =>
-      readFileSync(join(context.cwd, '.agentflow/config.json'), 'utf8'),
+      readFileSync(join(context.cwd, '.briefback/config.json'), 'utf8'),
     ).toThrow();
     expect(context.output().stderr).toContain('install failed with exit code 9');
   } finally {
