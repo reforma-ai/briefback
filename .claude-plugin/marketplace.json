@@ -5,13 +5,13 @@
     "email": "dev@reforma.ai"
   },
   "metadata": {
-    "description": "Opinionated workflow for shipping production-ready changes with coding agents."
+    "description": "A skill that helps coding agents challenge assumptions and agree on scope before implementation."
   },
   "plugins": [
     {
       "name": "briefback",
       "source": "./",
-      "description": "An opinionated workflow for shipping production-ready changes with coding agents."
+      "description": "A skill that helps coding agents challenge assumptions and agree on scope before implementation."
     }
   ]
 }

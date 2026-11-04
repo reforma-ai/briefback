@@ -1,7 +1,7 @@
 {
   "name": "@reforma/briefback",
   "version": "2.0.2",
-  "description": "An opinionated workflow for shipping production-ready changes with coding agents.",
+  "description": "A skill that helps coding agents challenge assumptions and agree on scope before implementation.",
   "author": "Reforma, Inc. <dev@reforma.ai>",
   "type": "module",
   "bin": {
@@ -10,6 +10,7 @@
   "files": [
     "assets",
     "bin",
+    "docs",
     "skills",
     "plugin.json",
     ".claude-plugin",
@@ -35,7 +36,7 @@
     "type": "git",
     "url": "git+https://github.com/reforma-ai/briefback.git"
   },
-  "homepage": "https://github.com/reforma-ai/briefback#readme",
+  "homepage": "https://briefback.dev",
   "bugs": "https://github.com/reforma-ai/briefback/issues",
   "keywords": [
     "agent-skills",
@@ -46,7 +47,7 @@
   ],
   "license": "MIT",
   "engines": {
-    "node": ">=20"
+    "node": ">=22.20.0"
   },
   "publishConfig": {
     "access": "public"

@@ -2,13 +2,13 @@
   "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
   "name": "briefback",
   "version": "2.0.2",
-  "description": "An opinionated workflow for shipping production-ready changes with coding agents.",
+  "description": "A skill that helps coding agents challenge assumptions and agree on scope before implementation.",
   "author": {
     "name": "Reforma, Inc.",
     "email": "dev@reforma.ai",
     "url": "https://github.com/reforma-ai/briefback"
   },
-  "homepage": "https://github.com/reforma-ai/briefback",
+  "homepage": "https://briefback.dev",
   "repository": "https://github.com/reforma-ai/briefback",
   "license": "MIT",
   "keywords": [
