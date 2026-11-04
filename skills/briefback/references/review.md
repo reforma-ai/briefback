@@ -84,8 +84,12 @@ smallest refactor that fully resolves the problem, not the smallest edit.
 2. **Safety** — check input validation, authorization, injection, secrets, and
    failure paths where relevant. Look for swallowed errors, partial writes,
    wrong write order, and missing atomicity that could lose or corrupt data.
+   For retryable writes, check duplicate delivery and restart after partial
+   completion: neither should repeat an unintended side effect.
 3. **Load and speed** — check races, work repeated by every process, state
    that should be shared, growing memory, queries per item, and costly loops.
+   Before adding locks, check whether mutable state needs to be shared at all.
+   Where it does, make write ownership explicit.
    Fix demonstrated slowdowns and failures at expected load; do not add
    speculative infrastructure or optimize without a concrete cost.
 4. **Reuse** — search the repo for each new helper, component, or copied
@@ -94,7 +98,10 @@ smallest refactor that fully resolves the problem, not the smallest edit.
    keep the better one, retarget imports, delete the rest.
 5. **Smell** — pass-throughs, extra HTML/JSX, one-off barrels, muddy shape.
    Inline, move, consolidate, or delete. Check whether responsibilities live in
-   the module that owns them. Do not wrap a wrapper.
+   the module that owns them. Prefer a data shape that rules out invalid
+   combinations over scattered corrective checks. Parse external data at its
+   boundary; avoid repeating validation of established internal invariants.
+   Do not wrap a wrapper.
 6. **Orphans** — unused imports, locals, helpers, exports, files, or
    commented-out blocks **this change** made dead. Grep real uses, including
    dynamic `import()` and string path lookups. Zero uses → delete. Public
@@ -103,12 +110,18 @@ smallest refactor that fully resolves the problem, not the smallest edit.
    and data writes have tests that fail when behavior breaks. Add focused
    coverage where needed, not tests that mirror implementation or chase a
    coverage number. Keep real behavior tests; delete mock-theater, dupes,
-   empty, or greenwash. Do not reshape prod to please a weak test.
+   empty, or greenwash. Ask whether a no-op implementation or wrong result
+   would still pass. Assert outcomes through the consumer's interface.
+   Do not reshape prod to please a weak test.
 
 Before fixing or reporting a suspected defect, confirm the concrete input or
 situation, the path that reaches it, and the wrong result. Re-read the code and
-verify the assumptions. Structural changes need a concrete benefit under the
-readability rules above, not a style preference. Respect a documented shortcut
+verify the assumptions. Fix the cause rather than hide its symptom with a
+fallback. When repeated fixes fail the same check, revisit their shared
+assumption before adding another workaround.
+
+Structural changes need a concrete benefit under the readability rules above,
+not a style preference. Respect a documented shortcut
 while its assumptions and stated limits still hold; check them against the
 stage and expected use.
 
@@ -140,6 +153,10 @@ No pass / done / clean claim without a command you ran in **this** turn.
 Identify the command → run it full → read exit and failures → then claim.
 
 Use the project's test and lint for the scoped files.
+
+Before a refactor, establish the behavior to preserve. Use existing checks;
+add focused characterization coverage only where needed. Verify each coherent
+structural change before building on it.
 
 A bug you fixed with no covering test → add a regression test or list
 `no test: …`.
