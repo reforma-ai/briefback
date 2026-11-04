@@ -2,7 +2,7 @@
 
 [Back to the README](../README.md) · [Installation](installation.md)
 
-Briefback installs as one skill. Describe your task in ordinary language; the agent selects the relevant mode and follows the workflow from there.
+Briefback installs as one skill. Describe your task in ordinary language; the agent selects the relevant mode and follows the workflow from there. You do not need to name Briefback to activate it for substantial work.
 
 For work larger than a quick fix, it starts at the earliest necessary phase. Research gathers missing context, Grill settles open decisions, and a plan preserves the sequence when the work needs several stages.
 

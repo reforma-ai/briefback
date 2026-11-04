@@ -25,15 +25,15 @@ Choose your agent and project scope. Accept **Set up Briefback docs?** to add
 `BRIEFBACK.md` and a pointer in `AGENTS.md`, giving the project an explicit
 instruction to use Briefback for work larger than a quick fix.
 
-Then give your agent a real task. For a project with a customer list, try:
+Then talk to your agent normally. Briefback activates for substantial tasks;
+you don't need to mention its name. For example:
 
-> Use Briefback to clarify this request before coding: add CSV export to the
-> customer list.
+> Research how authentication works in this project.
 
-The agent investigates facts it can read from the repo, asks you to settle
+The agent selects the relevant mode from your request. When you ask for a
+change, it investigates facts it can read from the repo, asks you to settle
 open decisions, and recommends answers. Confirm or correct its reading before
-it implements. You can describe tasks in ordinary language; there are no mode
-commands to memorize.
+it implements. There are no mode commands to memorize.
 
 [Other installation options and updates](docs/installation.md)
 

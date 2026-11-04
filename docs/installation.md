@@ -24,13 +24,14 @@ that instruction explicit for this repo.
 Do not edit `BRIEFBACK.md` by hand. `init` and `update` replace it. Put your
 project conventions in `AGENTS.md` instead.
 
-After setup, ask your agent to clarify a real task before coding, for example:
+After setup, describe your task in ordinary language. Briefback activates for
+substantial work without being named. For example:
 
-> Use Briefback to clarify this request before coding: add CSV export to the
-> customer list.
+> Research how authentication works in this project.
 
-Use a task that fits your repo. Confirm the agent's settled understanding to
-proceed with implementation. See the [README example](../README.md#a-request-that-can-go-wrong)
+Or ask for a change, such as “Add CSV export to the customer list.” Use a task
+that fits your repo. Confirm the agent's settled understanding before it
+implements. See the [README example](../README.md#a-request-that-can-go-wrong)
 and [workflow reference](workflow.md) for what happens next.
 
 ## Update
