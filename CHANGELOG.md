@@ -1,5 +1,12 @@
 # @reforma/briefback
 
+## 2.0.4
+
+### Patch Changes
+
+- bb7c7bc: Keep plan tasks current during implementation and record landed commit hashes
+  with descriptions under the stages they implement.
+
 ## 2.0.3
 
 ### Patch Changes
