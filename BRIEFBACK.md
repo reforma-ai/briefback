@@ -52,8 +52,11 @@ are progress inside that stage. Without a plan, use the confirmed reading and
 keep the current stage reviewable. Load project craft skills named in
 `AGENTS.md`. Run `briefback tdd` for test-first work.
 
-**Done when:** the stage meets its verify checks, its Complete box is checked
-(if a plan exists), and later stages match what remains.
+Keep the plan current as work happens: check off completed tasks, reopen tasks
+when needed, and revise remaining work as scope changes.
+
+**Done when:** the stage meets its verify checks, its tasks and Complete box are
+checked (if a plan exists), and later stages match what remains.
 
 ## 5. Review
 
@@ -69,10 +72,13 @@ every unfixed problem is in front of the user with how to fix it.
 ## 6. Commit
 
 Commit with the project's normal workflow, then return to step 4 for the next
-unchecked stage.
+unchecked stage. When a plan exists, record each landed commit's hash and a
+short description under the stage it implements, including partial stage
+commits.
 
-**Done when:** the stage is committed (or staged per project rules) and the next
-stage is identified or the confirmed scope is complete.
+**Done when:** the stage is committed (or staged per project rules), landed
+commits are recorded in the plan when present, and the next stage is identified
+or the confirmed scope is complete.
 
 ## 7. Handoff (fresh context)
 
