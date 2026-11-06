@@ -22,8 +22,10 @@ An explicit Plan request still writes a plan. Do not implement.
 # <Feature>
 
 > Keep this plan current during implementation.
+> Check off tasks as their outcomes are completed.
 > Check a stage only after its done-when and verification pass.
 > Record scope changes before leaving the stage.
+> Record landed commits under the stage they implement.
 
 **Goal:** one sentence
 **Approach:** 2–3 sentences — how the pieces fit
@@ -56,6 +58,7 @@ encodes. Not a file list.
 
 **Done when:** <one observable sentence>
 **Verify:** `<command>`
+**Commits:** None yet.
 
 ## Stage 2 — <title>
 
@@ -70,6 +73,7 @@ encodes. Not a file list.
 
 **Done when:** …
 **Verify:** `<command>`
+**Commits:** None yet.
 ```
 
 **Decisions** is the grill, durable. **This stage** is the briefing for one
@@ -77,6 +81,20 @@ implementation and review boundary. Tasks are outcomes. **Files** are the map.
 
 Nested tasks are progress. Check **Complete** only after done-when and verify
 pass. The next stage starts from an unchecked Complete box, not a checked child.
+
+## Keep current
+
+Maintain the plan from approval through implementation. As each task's outcome
+is completed, check it off even if the stage is still in progress. Reopen tasks
+when later work invalidates them, and update remaining tasks when scope changes.
+Do this as work happens, not only at stage completion or handoff.
+
+After work lands in a commit, add its hash and a short description under the
+relevant stage's **Commits**. Record partial stage commits too, so another agent
+can find which commit implements each outcome. Replace `None yet.` only with
+actual commit references; completed but uncommitted work keeps that label.
+
+## Stage boundaries
 
 Each stage is the smallest coherent, reviewable implementation step with one
 clear outcome and a practical way to verify it. A stage is not necessarily a

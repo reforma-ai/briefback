@@ -78,6 +78,9 @@ only when the user or project requires test-first work.
   actions are authorized.
 - Keep research, plans, and handoffs under one
   `.briefback/<feature>/` slug so later phases can find them.
+- Keep an existing plan current throughout implementation: check off tasks as
+  their outcomes are completed, reopen or revise them when work changes, and
+  record landed commit hashes with a short description under the relevant stage.
 - Settle decisions before implementation. Use Plan only when sequencing, scope
   tracking, or handoff needs a durable artifact. Implement one coherent stage
   at a time, then review it before committing and starting the next. A stage is
