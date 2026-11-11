@@ -12,28 +12,28 @@ You can also request a specific mode directly, in ordinary language or with an e
 | --- | --- | --- |
 | Research | Saves findings that should survive the current chat | `/briefback research` |
 | Grill | Works through assumptions and open decisions with you | `/briefback grill` |
-| Plan | Records an ordered sequence of implementation stages | `/briefback plan` |
+| Plan | Records implementation stages, dependencies, and work boundaries | `/briefback plan` |
 | TDD | Works through one red-green slice at a time | `/briefback tdd` |
 | Review | Reviews and refactors a stage, then fixes defects | `/briefback review` |
 | Handoff | Saves the context needed to continue in another chat | `/briefback handoff` |
 | Document | Turns research, a plan, or a shipped change into a project page | `/briefback document` |
 
-Requests such as “Research authentication first,” “Review the changes,” or “Save a handoff for a fresh chat” select the same modes. “Continue” resumes the first unfinished stage from the current plan or handoff.
+Requests such as “Research authentication first,” “Review the changes,” or “Save a handoff for a fresh chat” select the same modes. “Continue” resumes unfinished work with completed dependencies from the current plan or handoff, within your authorized scope.
 
 ## The loop
 
-Use the loop for work larger than a quick fix. Skip research when the area is already understood. Plan is for work whose sequence needs a durable artifact; obvious work can go from Grill straight to implementation. Settle decisions before implementation, then review each completed stage before moving on.
+Use the loop for work larger than a quick fix. Skip research when the area is already understood. Plan is for work whose dependencies and progress need a durable artifact; obvious work can go from Grill straight to implementation. Settle decisions before implementation, then verify, review, and commit each stage before its dependents start.
 
 1. The agent learns how the area works, if needed.
 2. Grill sharpens the task with you.
 3. The agent plans stages when the sequence needs a durable artifact.
-4. The agent implements one stage.
+4. The agent executes ready stages within the authorized scope.
 5. The agent reviews that stage, usually in a subagent.
 6. The agent checks the final diff and commits the stage.
 7. The agent saves a handoff when work moves to a fresh chat.
 8. The agent documents the result when requested.
 
-The agent repeats implementation, review, and commit until the confirmed scope is complete.
+The agent repeats implementation, review, and commit until the authorized scope is complete. Independent work may overlap; each stage keeps its own checks and commit.
 
 > [!TIP]
 > Briefback keeps research, plans, handoffs, and local setup state under `.briefback/`.
@@ -61,31 +61,39 @@ Planning follows Grill when the work needs durable coordination across several s
 
 In a normal chat, Plan writes `.briefback/<slug>/plan.md`. In Native Plan mode, the agent uses the client's planning flow and native plan artifact instead.
 
-The plan keeps the settled Grill decisions and divides the feature into coherent implementation stages. A stage has one clear outcome and a practical check; it is not a quota of files or lines, and it does not need to be an independently deployable release. One real pull request may contain several stages. Each stage records why it exists, its outcome, and which files it expects to change, so a fresh chat can pick it up without replaying the Grill conversation.
+The plan keeps the settled Grill decisions and divides the feature into coherent implementation stages. A stage has one clear outcome and a practical check; it is not a quota of files or lines, and it does not need to be an independently deployable release. One real pull request may contain several stages. Each stage records why it exists, its outcome, which files it expects to change, and its prerequisites in `Depends on`, so another agent can pick it up without replaying the Grill conversation.
+
+Dependencies describe actual prerequisites. For example, a shared-contract stage can unblock separate backend and frontend stages, followed by an integration stage that depends on both. Independent stages may run concurrently when their edits and shared contracts are compatible. Within a complex stage, the plan can identify independent task assignments and how to verify their combined result. It does not add stages or temporary scaffolding merely to create parallel work.
 
 Lower-level work often comes first: behavior-preserving refactoring, shared types, backend work, then the interface that uses them. That is a common sequence, not a template. Substantial backend and frontend changes normally stay in separate stages; a small, tightly coupled vertical change can stay together. Feature-local wiring should remain with the interface that first needs it.
 
 The agent keeps the plan current as the work changes.
 
-### 4. Implement one stage
+### 4. Execute authorized stages
 
-The agent implements and verifies the first unchecked stage, then sends it through review. Without a plan, it uses the confirmed reading and keeps the current stage small enough to review. The saved plan and handoff let work resume in a fresh chat. For test-first work, the agent follows the TDD mode.
+When you say “implement it,” the agent works through the agreed plan unless you set a narrower limit, such as “only Stage 1.” It selects unfinished stages whose dependencies are complete. For older plans without explicit dependencies, it preserves their written order unless independence is established. Without a plan, it uses the confirmed reading and keeps the work reviewable. For test-first work, it follows the TDD mode.
+
+The parent agent coordinates scope, assignments, integration, plan updates, and commits. It chooses direct execution, one subagent, or several, sequentially or concurrently. Independent work can improve speed; focused investigation and fresh reviews can improve quality; narrow contexts and concise worker returns can reduce token use. The agent weighs those gains against briefing, duplicated investigation, and integration costs. Parallelism is optional, and delegation can help even when work stays sequential.
+
+Each assignment includes its outcome, relevant decisions, owned changes, dependencies, and checks. Concurrent writers need separate ownership or isolated workspaces, with coordination for shared contracts. Overlapping edits and review fixes are sequenced. The parent integrates and verifies task results together before stage review, without duplicating the workers' implementation.
 
 The agent loads relevant skills named in `AGENTS.md`. If implementation spills into a later stage, it updates the plan when one exists instead of quietly expanding the current one.
 
-Before review, the agent updates `plan.md` when one exists. It checks off the stage only after its checks pass, then records any scope changes that affect later work.
+The parent updates `plan.md` as tasks finish or scope changes. Workers report progress rather than editing the plan concurrently. A stage's Complete box is checked only after its verification, review, and commit finish (or staging per project rules).
 
 ### 5. Run an agent review
 
 Review normally runs in a subagent with the context of what changed and why. If the client cannot launch one, the main agent reviews the stage. The reviewer fixes defects and makes behavior-preserving refactors when the structure needs them. That may include coordinated changes across several files. If the code is already well-shaped, the assessment says so instead of manufacturing a refactor. Concrete improvements outside the safe review scope return as follow-ups; product and contract calls return as decisions.
 
+When subagents are available, the reviewer is separate from the implementer. During concurrent work, the parent provides a stage-specific diff and coordinates fixes that reach another worker's area or change a shared contract.
+
 ### 6. Review and commit
 
-The agent checks the final diff and commits the stage through the project's normal workflow.
+The parent checks the final diff and commits each stage separately through the project's normal workflow, excluding unfinished work from other stages. It records each commit's hash and a short description under the stage's `Commits` field when a plan exists, including partial stage commits. Once the stage is complete, newly ready work can start without waiting for unrelated stages.
 
 ### 7. Refresh the context
 
-When unfinished work moves to a fresh chat, the agent saves a handoff with what shipped, what changed, and which stage comes next.
+When unfinished work moves to a fresh chat, the agent saves a handoff with what shipped, what remains, the authorized scope, and which stages are ready next. It records active worker ownership and workspaces so the next chat can collect results without duplicating assignments. Workers that cannot continue across the handoff are collected or stopped, with unfinished changes recorded before ownership transfers.
 
 The saved plan, when present, and the handoff let the agent resume implementation in the new chat.
 
@@ -109,8 +117,8 @@ Keep related work under one feature slug:
 
 Create only the artifacts the task needs. Attach the research, plan, or handoff
 when moving to a fresh chat, then ask the agent to continue. It resumes the
-first unfinished stage rather than restarting the feature. Local CLI setup
-state lives separately at `.briefback/config.json`.
+ready unfinished work within the authorized scope rather than restarting the
+feature. Local CLI setup state lives separately at `.briefback/config.json`.
 
 The installed skill's [mode references](../skills/briefback/references/) define
 the agent instructions. [BRIEFBACK.md](../BRIEFBACK.md) sequences the project

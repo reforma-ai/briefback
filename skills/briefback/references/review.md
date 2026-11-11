@@ -17,6 +17,14 @@ review trail.
 2. **Why** — the stage intent (stage briefing, user request, settled constraints
    that affect this diff)
 
+When subagents are available, use a reviewer separate from the stage's
+implementer. When other stages are in progress, give an explicit stage diff and
+ownership boundaries so their changes
+stay outside this review. Review may change affected consumers beyond those
+boundaries: coordinate with their owners or pause overlapping writers before
+fixing them. Isolated workspaces also need coordination when fixes change a
+shared contract. Verify the integrated stage result before committing it.
+
 When it finishes, relay its return. Do not re-review.
 
 **Subagent.** You were launched to review. Review, fix, and verify. Return

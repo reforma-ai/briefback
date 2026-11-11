@@ -7,7 +7,7 @@ modes and names artifact paths.
 ```text
 Research → Grill → Plan → Stage → Review → Commit
                           ↑                     │
-                          └──── Next stage ─────┘
+                          └──── Ready stages ───┘
 ```
 
 Skip Research when the area is already clear. Use Plan only when sequencing,
@@ -42,21 +42,31 @@ several stages, non-obvious dependencies, or a likely context handoff. Compact,
 obvious work continues at step 4 without a plan file.
 
 **Done when:** `.briefback/<feature>/plan.md` exists with the settled list and
-ordered unchecked stages, or the plan was skipped because the confirmed scope
-is compact and clear in the conversation.
+unchecked stages with explicit dependencies and clear work boundaries, or the
+plan was skipped because the confirmed scope is compact and clear in the
+conversation. Parallel work is optional; do not split work just to distribute it.
 
-## 4. Implement one stage
+## 4. Execute authorized stages
 
-Implement only the first stage whose Complete box is unchecked. Nested tasks
-are progress inside that stage. Without a plan, use the confirmed reading and
-keep the current stage reviewable. Load project craft skills named in
-`AGENTS.md`. Run `briefback tdd` for test-first work.
+An instruction to proceed covers the agreed plan unless the user limits it,
+such as "only Stage 1". Select unfinished stages whose dependencies are complete
+within that scope. Without explicit dependencies in an older plan, preserve its
+written order unless independence is established. Without a plan, use the
+confirmed reading and keep the work reviewable. Load project craft skills named
+in `AGENTS.md`. Run `briefback tdd` for test-first work.
 
-Keep the plan current as work happens: check off completed tasks, reopen tasks
-when needed, and revise remaining work as scope changes.
+The parent coordinates scope, assignments, integration, plan updates, and commits.
+Choose direct work or subagents, sequentially or concurrently, when the benefit
+to speed, quality, or token use outweighs coordination costs. Parallelize ready
+stages or independent tasks within a stage only with compatible work boundaries
+and shared contracts. Integrate task results before verifying and reviewing the
+whole stage. Follow the skill's execution rules; do not duplicate assigned work.
 
-**Done when:** the stage meets its verify checks, its tasks and Complete box are
-checked (if a plan exists), and later stages match what remains.
+The coordinator keeps the plan current as work happens: check off completed
+tasks, reopen tasks when needed, and revise remaining work as scope changes.
+
+**Done when:** each implemented stage meets its verification checks and is ready
+for review. Its Complete box stays unchecked until review and commit finish.
 
 ## 5. Review
 
@@ -66,19 +76,25 @@ refactors across the affected stage, including multi-file changes. Anything
 left unfixed needs a product decision, contract change, unrelated subsystem, or
 cannot be verified safely.
 
+Keep each review scoped to its stage. Coordinate review fixes with other active
+work so reviewers and implementers do not make conflicting changes.
+
 **Done when:** avoidable production structure is gone, defects are fixed, and
 every unfixed problem is in front of the user with how to fix it.
 
 ## 6. Commit
 
-Commit with the project's normal workflow, then return to step 4 for the next
-unchecked stage. When a plan exists, record each landed commit's hash and a
-short description under the stage it implements, including partial stage
-commits.
+Commit each stage separately with the project's normal workflow, excluding
+unfinished changes from other stages. When a plan exists, record each landed
+commit's hash and a short description under the stage it implements, including
+partial stage commits. Mark the stage Complete after verification, review, and
+commit (or staging per project rules). Return to step 4 for newly ready work
+without waiting for unrelated stages. Continue within the authorized scope;
+return to the user for decisions or blockers that need their input.
 
 **Done when:** the stage is committed (or staged per project rules), landed
-commits are recorded in the plan when present, and the next stage is identified
-or the confirmed scope is complete.
+commits are recorded and Complete is checked in the plan when present, and newly
+ready work is identified or the authorized scope is complete.
 
 ## 7. Handoff (fresh context)
 

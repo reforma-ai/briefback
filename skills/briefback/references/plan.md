@@ -23,7 +23,8 @@ An explicit Plan request still writes a plan. Do not implement.
 
 > Keep this plan current during implementation.
 > Check off tasks as their outcomes are completed.
-> Check a stage only after its done-when and verification pass.
+> Check a stage only after done-when, verification, review, and commit
+> (or staging per project rules).
 > Record scope changes before leaving the stage.
 > Record landed commits under the stage they implement.
 
@@ -42,6 +43,8 @@ An explicit Plan request still writes a plan. Do not implement.
 - <confirmed no>
 
 ## Stage 1 — <title>
+
+**Depends on:** None.
 
 **This stage:** 2–4 sentences for someone who was not in this chat. Why this
 stage exists, what coherent outcome it reaches, and which settled decisions it
@@ -62,6 +65,8 @@ encodes. Not a file list.
 
 ## Stage 2 — <title>
 
+**Depends on:** Stage 1.
+
 **This stage:** …
 
 - [ ] Complete
@@ -79,20 +84,46 @@ encodes. Not a file list.
 **Decisions** is the grill, durable. **This stage** is the briefing for one
 implementation and review boundary. Tasks are outcomes. **Files** are the map.
 
-Nested tasks are progress. Check **Complete** only after done-when and verify
-pass. The next stage starts from an unchecked Complete box, not a checked child.
+Nested tasks are progress. Check **Complete** only after done-when, verification,
+review, and commit (or staging per project rules). Start unfinished stages only
+when their dependencies are complete and they fall within the user's authorized
+scope. A checked child task does not complete a dependency.
+
+## Dependencies and delegation
+
+Record each stage's prerequisites in **Depends on**, using stage numbers or
+`None`. Dependencies must be acyclic and name actual prerequisites, not merely
+the preceding stage. Number stages in a valid dependency order; stages without
+a dependency path between them may run concurrently when their changes are
+compatible. For older plans without dependencies, preserve their written order
+unless independence is established from the work.
+
+Design stages so another agent can execute them from the plan with the relevant
+settled decisions and repository context. Use **Files** and task descriptions to
+make ownership and shared contracts clear. For a complex stage with useful
+parallel work, identify independent task assignments and their integration check
+inside the stage. Keep one stage-level verification, review, and commit boundary.
+
+Choose boundaries that permit independent work where it improves speed, quality,
+or token use after coordination costs. Parallelism is optional. Keep tightly
+coupled work together; do not invent dependencies, extra stages, temporary mocks,
+or production scaffolding just to distribute work. Overlapping edits or unsettled
+shared contracts require sequencing or an explicit integration arrangement.
 
 ## Keep current
 
-Maintain the plan from approval through implementation. As each task's outcome
+The coordinator maintains the plan from approval through implementation; workers
+report progress rather than concurrently editing it. As each task's outcome
 is completed, check it off even if the stage is still in progress. Reopen tasks
 when later work invalidates them, and update remaining tasks when scope changes.
 Do this as work happens, not only at stage completion or handoff.
 
-After work lands in a commit, add its hash and a short description under the
-relevant stage's **Commits**. Record partial stage commits too, so another agent
-can find which commit implements each outcome. Replace `None yet.` only with
-actual commit references; completed but uncommitted work keeps that label.
+Commit each stage separately after verification and review, keeping unfinished
+changes from other stages out of that commit. After work lands in a commit, add
+its hash and a short description under the relevant stage's **Commits**. Record
+partial stage commits too, so another agent can find which commit implements
+each outcome. Replace `None yet.` only with actual commit references; completed
+but uncommitted work keeps that label.
 
 ## Stage boundaries
 
@@ -158,8 +189,11 @@ relevant to its scope; the overall feature may still need later stages.
 7. Every stage leaves the repository internally consistent and passes its
    scoped verification. It need not complete or independently ship the whole
    feature.
+8. Dependencies name real prerequisites without cycles. Any concurrent work has
+   compatible ownership and contracts, and a way to verify its combined result.
 
 ## Output
 
-Print the path. The implementer starts with the first stage whose Complete box is
-unchecked, in this context or a new one.
+Print the path. On authorization to implement, the coordinator selects unfinished
+stages with completed dependencies inside the user's permitted scope. It chooses
+direct, delegated, sequential, or parallel execution according to the work.

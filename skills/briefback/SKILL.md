@@ -19,7 +19,7 @@ One entrypoint for an ordered development loop:
 ```text
 Research → Grill → Plan → Stage → Review → Commit
                           ↑                   │
-                          └───── Repeat ─────┘
+                          └── Ready stages ─┘
 ```
 
 ## Default behavior
@@ -51,9 +51,14 @@ brief in the same request, such as `$briefback research authentication` or
 
 `continue` and `implement` resume delivery rather than load another playbook.
 Read the current plan and latest handoff when they exist, then implement only
-the first unchecked stage. Without a plan, use the confirmed reading from the
-conversation or handoff. Load [references/tdd.md](references/tdd.md)
-only when the user or project requires test-first work.
+the authorized scope. An instruction to proceed covers the agreed plan unless
+the user limits it, for example to Stage 1. Select unfinished stages whose
+dependencies are complete; independent stages may run concurrently. For older
+plans without explicit dependencies, preserve their written order unless
+independence is established from the work. Without a plan, use the confirmed
+reading from the conversation or handoff. Load
+[references/tdd.md](references/tdd.md) only when the user or project requires
+test-first work.
 
 ## Routing
 
@@ -82,8 +87,43 @@ only when the user or project requires test-first work.
   their outcomes are completed, reopen or revise them when work changes, and
   record landed commit hashes with a short description under the relevant stage.
 - Settle decisions before implementation. Use Plan only when sequencing, scope
-  tracking, or handoff needs a durable artifact. Implement one coherent stage
-  at a time, then review it before committing and starting the next. A stage is
-  an execution and review boundary, not necessarily a pull request or release.
+  tracking, or handoff needs a durable artifact. Each stage keeps its own
+  verification, review, and commit boundary, including when stages overlap in
+  time. A stage is not necessarily a pull request or release.
 - A phase may route to the next phase when its own completion rules say so.
   Read the next reference at that point, not earlier.
+
+## Coordinate execution
+
+The parent agent owns the agreed scope, dependencies, plan updates, integration,
+and commits. Choose direct execution, one subagent, or several subagents based
+on the task. Delegate or parallelize when it can improve speed through
+independent work, quality through focused investigation or a fresh review, or
+token use through narrow contexts and concise returns. Weigh those gains
+against briefing, duplicated investigation, and integration costs. Sequential
+delegation can help too. Do not split work merely to create more agents; use
+direct execution when coordination adds no value. Follow each mode's isolation
+rules and use direct execution when the client cannot launch subagents.
+
+For each assignment, provide the intended outcome, relevant settled decisions,
+owned changes, dependencies, and verification. Ask for changed paths, check
+results, and blockers. Keep the parent's context focused on decisions and
+results rather than copying each worker's investigation. Do not duplicate a
+worker's implementation while it is assigned.
+
+Run independent ready stages, or independent tasks within a complex stage,
+concurrently only when their edits and shared contracts are compatible. Give
+concurrent writers separate ownership or isolated workspaces; serialize
+overlapping edits, including review fixes. Within a stage, integrate all task
+results and verify the combined result before stage review.
+
+Accept results against the assignment and resolve routine blockers. Revise or
+reassign work when the approach stalls; return product decisions or changes to
+the agreed scope to the user. As each stage passes verification and review,
+commit it separately, excluding unfinished work from other stages, then record
+its hash and a short description in the plan when present. Mark Complete only
+after that cycle (or staging per project rules). Dependencies become ready at
+that point. Start newly ready work without waiting for unrelated workers. When
+a branch needs user input, continue other authorized work that does not depend
+on that decision. Stop when the authorized scope is complete or no further
+progress is possible without user input.
