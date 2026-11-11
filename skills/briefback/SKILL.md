@@ -50,15 +50,12 @@ brief in the same request, such as `$briefback research authentication` or
 `/briefback review the current diff`.
 
 `continue` and `implement` resume delivery rather than load another playbook.
-Read the current plan and latest handoff when they exist, then implement only
-the authorized scope. An instruction to proceed covers the agreed plan unless
-the user limits it, for example to Stage 1. Select unfinished stages whose
-dependencies are complete; independent stages may run concurrently. For older
-plans without explicit dependencies, preserve their written order unless
-independence is established from the work. Without a plan, use the confirmed
-reading from the conversation or handoff. Load
-[references/tdd.md](references/tdd.md) only when the user or project requires
-test-first work.
+Read the current plan and latest handoff when present; otherwise use the
+confirmed reading in chat. Proceed through the agreed plan unless the user
+limits the scope, for example to Stage 1. Start unfinished stages with completed
+dependencies; preserve written order when dependencies are absent unless
+independence is established. Load [references/tdd.md](references/tdd.md) only
+when the user or project requires test-first work.
 
 ## Routing
 
@@ -87,43 +84,29 @@ test-first work.
   their outcomes are completed, reopen or revise them when work changes, and
   record landed commit hashes with a short description under the relevant stage.
 - Settle decisions before implementation. Use Plan only when sequencing, scope
-  tracking, or handoff needs a durable artifact. Each stage keeps its own
-  verification, review, and commit boundary, including when stages overlap in
-  time. A stage is not necessarily a pull request or release.
+  tracking, or handoff needs a durable artifact. A stage is a verification,
+  review, and commit boundary, not necessarily a pull request or release. Mark
+  Complete after those checks and its separate commit (or staging per project
+  rules), excluding unfinished changes from other stages.
 - A phase may route to the next phase when its own completion rules say so.
   Read the next reference at that point, not earlier.
 
 ## Coordinate execution
 
-The parent agent owns the agreed scope, dependencies, plan updates, integration,
-and commits. Choose direct execution, one subagent, or several subagents based
-on the task. Delegate or parallelize when it can improve speed through
-independent work, quality through focused investigation or a fresh review, or
-token use through narrow contexts and concise returns. Weigh those gains
-against briefing, duplicated investigation, and integration costs. Sequential
-delegation can help too. Do not split work merely to create more agents; use
-direct execution when coordination adds no value. Follow each mode's isolation
-rules and use direct execution when the client cannot launch subagents.
+The parent owns scope, assignments, integration, plan updates, and commits.
+Choose direct work or subagents, sequentially or concurrently, when gains in
+speed, quality, or token use outweigh coordination costs. Follow mode-specific
+isolation rules; work directly when subagents are unavailable. Do not split work
+just to distribute it.
 
-For each assignment, provide the intended outcome, relevant settled decisions,
-owned changes, dependencies, and verification. Ask for changed paths, check
-results, and blockers. Keep the parent's context focused on decisions and
-results rather than copying each worker's investigation. Do not duplicate a
-worker's implementation while it is assigned.
+Give workers the outcome, relevant decisions, owned changes, and checks; collect
+concise results and blockers without duplicating their work. Parallelize ready
+stages or independent tasks within a stage only with compatible edits and shared
+contracts. Separate concurrent writers' ownership or workspaces, and sequence
+overlapping edits, including review fixes. Integrate and verify a stage's combined
+result before review.
 
-Run independent ready stages, or independent tasks within a complex stage,
-concurrently only when their edits and shared contracts are compatible. Give
-concurrent writers separate ownership or isolated workspaces; serialize
-overlapping edits, including review fixes. Within a stage, integrate all task
-results and verify the combined result before stage review.
-
-Accept results against the assignment and resolve routine blockers. Revise or
-reassign work when the approach stalls; return product decisions or changes to
-the agreed scope to the user. As each stage passes verification and review,
-commit it separately, excluding unfinished work from other stages, then record
-its hash and a short description in the plan when present. Mark Complete only
-after that cycle (or staging per project rules). Dependencies become ready at
-that point. Start newly ready work without waiting for unrelated workers. When
-a branch needs user input, continue other authorized work that does not depend
-on that decision. Stop when the authorized scope is complete or no further
-progress is possible without user input.
+Resolve routine blockers or reassign stalled work. Start newly ready work without
+waiting for unrelated workers. Return scope or product decisions to the user
+while continuing unaffected authorized work; stop when that scope is complete
+or further progress needs user input.

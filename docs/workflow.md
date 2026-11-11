@@ -63,7 +63,7 @@ In a normal chat, Plan writes `.briefback/<slug>/plan.md`. In Native Plan mode, 
 
 The plan keeps the settled Grill decisions and divides the feature into coherent implementation stages. A stage has one clear outcome and a practical check; it is not a quota of files or lines, and it does not need to be an independently deployable release. One real pull request may contain several stages. Each stage records why it exists, its outcome, which files it expects to change, and its prerequisites in `Depends on`, so another agent can pick it up without replaying the Grill conversation.
 
-Dependencies describe actual prerequisites. For example, a shared-contract stage can unblock separate backend and frontend stages, followed by an integration stage that depends on both. Independent stages may run concurrently when their edits and shared contracts are compatible. Within a complex stage, the plan can identify independent task assignments and how to verify their combined result. It does not add stages or temporary scaffolding merely to create parallel work.
+Dependencies expose independent work. A shared-contract stage might unblock parallel backend and frontend stages, followed by integration that depends on both. A complex stage can also contain independent assignments with a combined check.
 
 Lower-level work often comes first: behavior-preserving refactoring, shared types, backend work, then the interface that uses them. That is a common sequence, not a template. Substantial backend and frontend changes normally stay in separate stages; a small, tightly coupled vertical change can stay together. Feature-local wiring should remain with the interface that first needs it.
 
@@ -71,31 +71,25 @@ The agent keeps the plan current as the work changes.
 
 ### 4. Execute authorized stages
 
-When you say “implement it,” the agent works through the agreed plan unless you set a narrower limit, such as “only Stage 1.” It selects unfinished stages whose dependencies are complete. For older plans without explicit dependencies, it preserves their written order unless independence is established. Without a plan, it uses the confirmed reading and keeps the work reviewable. For test-first work, it follows the TDD mode.
-
-The parent agent coordinates scope, assignments, integration, plan updates, and commits. It chooses direct execution, one subagent, or several, sequentially or concurrently. Independent work can improve speed; focused investigation and fresh reviews can improve quality; narrow contexts and concise worker returns can reduce token use. The agent weighs those gains against briefing, duplicated investigation, and integration costs. Parallelism is optional, and delegation can help even when work stays sequential.
-
-Each assignment includes its outcome, relevant decisions, owned changes, dependencies, and checks. Concurrent writers need separate ownership or isolated workspaces, with coordination for shared contracts. Overlapping edits and review fixes are sequenced. The parent integrates and verifies task results together before stage review, without duplicating the workers' implementation.
+“Implement it” covers the agreed plan unless you specify a narrower limit, such as “only Stage 1.” The agent selects ready stages and chooses direct, delegated, or parallel execution under the skill's rules. Without a plan, it uses the confirmed reading. Parallelism is optional; the parent remains responsible for integrating and checking each stage's result.
 
 The agent loads relevant skills named in `AGENTS.md`. If implementation spills into a later stage, it updates the plan when one exists instead of quietly expanding the current one.
 
-The parent updates `plan.md` as tasks finish or scope changes. Workers report progress rather than editing the plan concurrently. A stage's Complete box is checked only after its verification, review, and commit finish (or staging per project rules).
+The parent keeps `plan.md` current as tasks finish or scope changes. A stage becomes Complete after verification, review, and commit (or staging per project rules).
 
 ### 5. Run an agent review
 
 Review normally runs in a subagent with the context of what changed and why. If the client cannot launch one, the main agent reviews the stage. The reviewer fixes defects and makes behavior-preserving refactors when the structure needs them. That may include coordinated changes across several files. If the code is already well-shaped, the assessment says so instead of manufacturing a refactor. Concrete improvements outside the safe review scope return as follow-ups; product and contract calls return as decisions.
 
-When subagents are available, the reviewer is separate from the implementer. During concurrent work, the parent provides a stage-specific diff and coordinates fixes that reach another worker's area or change a shared contract.
+Use a separate reviewer when subagents are available, coordinating fixes with any active workers.
 
 ### 6. Review and commit
 
-The parent checks the final diff and commits each stage separately through the project's normal workflow, excluding unfinished work from other stages. It records each commit's hash and a short description under the stage's `Commits` field when a plan exists, including partial stage commits. Once the stage is complete, newly ready work can start without waiting for unrelated stages.
+The parent commits each stage separately and records its commit hashes and short descriptions in the plan when present, including partial commits. Newly ready work can start without waiting for unrelated stages.
 
 ### 7. Refresh the context
 
-When unfinished work moves to a fresh chat, the agent saves a handoff with what shipped, what remains, the authorized scope, and which stages are ready next. It records active worker ownership and workspaces so the next chat can collect results without duplicating assignments. Workers that cannot continue across the handoff are collected or stopped, with unfinished changes recorded before ownership transfers.
-
-The saved plan, when present, and the handoff let the agent resume implementation in the new chat.
+The handoff records what shipped, what remains, authorized next work, and any active worker ownership. Attach it with the plan when present so the next chat can resume without duplicating assignments.
 
 ### 8. Archive or document the result
 

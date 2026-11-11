@@ -88,10 +88,8 @@ Research → Grill → Plan → Stage → Review → Commit
 ```
 
 Grill is where you settle decisions with the agent. Each stage is implemented,
-checked, reviewed, and committed before its dependent stages start. The agent
-uses subagents and parallel work when the gains in speed, quality, or token use
-outweigh coordination costs. Research is for unfamiliar areas; a written plan
-is for work that needs coordination across stages or chats.
+checked, reviewed, and committed before its dependent stages start. Research is
+for unfamiliar areas; a written plan coordinates work across stages or chats.
 
 [Full workflow and modes](docs/workflow.md)
 

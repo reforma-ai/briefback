@@ -84,46 +84,23 @@ encodes. Not a file list.
 **Decisions** is the grill, durable. **This stage** is the briefing for one
 implementation and review boundary. Tasks are outcomes. **Files** are the map.
 
-Nested tasks are progress. Check **Complete** only after done-when, verification,
-review, and commit (or staging per project rules). Start unfinished stages only
-when their dependencies are complete and they fall within the user's authorized
-scope. A checked child task does not complete a dependency.
+Nested tasks are progress; a checked child does not complete the stage.
 
 ## Dependencies and delegation
 
-Record each stage's prerequisites in **Depends on**, using stage numbers or
-`None`. Dependencies must be acyclic and name actual prerequisites, not merely
-the preceding stage. Number stages in a valid dependency order; stages without
-a dependency path between them may run concurrently when their changes are
-compatible. For older plans without dependencies, preserve their written order
-unless independence is established from the work.
-
-Design stages so another agent can execute them from the plan with the relevant
-settled decisions and repository context. Use **Files** and task descriptions to
-make ownership and shared contracts clear. For a complex stage with useful
-parallel work, identify independent task assignments and their integration check
-inside the stage. Keep one stage-level verification, review, and commit boundary.
-
-Choose boundaries that permit independent work where it improves speed, quality,
-or token use after coordination costs. Parallelism is optional. Keep tightly
-coupled work together; do not invent dependencies, extra stages, temporary mocks,
-or production scaffolding just to distribute work. Overlapping edits or unsettled
-shared contracts require sequencing or an explicit integration arrangement.
+**Depends on** lists actual prerequisite stages or `None`, without cycles.
+Number prerequisites before their dependents. Make ownership and shared contracts
+clear through **Files** and tasks so independent stages can run concurrently.
+Within a complex stage, identify useful independent assignments and their combined
+verification. Keep tightly coupled work together; do not add stages or scaffolding
+merely to create parallel work. Execution follows the skill's shared rules.
 
 ## Keep current
 
-The coordinator maintains the plan from approval through implementation; workers
-report progress rather than concurrently editing it. As each task's outcome
-is completed, check it off even if the stage is still in progress. Reopen tasks
-when later work invalidates them, and update remaining tasks when scope changes.
-Do this as work happens, not only at stage completion or handoff.
-
-Commit each stage separately after verification and review, keeping unfinished
-changes from other stages out of that commit. After work lands in a commit, add
-its hash and a short description under the relevant stage's **Commits**. Record
-partial stage commits too, so another agent can find which commit implements
-each outcome. Replace `None yet.` only with actual commit references; completed
-but uncommitted work keeps that label.
+The coordinator updates the plan as workers report results: check completed
+tasks, reopen invalidated work, and revise remaining tasks and dependencies.
+Record each landed commit's hash and short description under its stage's
+**Commits**, including partial commits. Keep `None yet.` until a commit exists.
 
 ## Stage boundaries
 
@@ -194,6 +171,5 @@ relevant to its scope; the overall feature may still need later stages.
 
 ## Output
 
-Print the path. On authorization to implement, the coordinator selects unfinished
-stages with completed dependencies inside the user's permitted scope. It chooses
-direct, delegated, sequential, or parallel execution according to the work.
+Print the path. Implementation starts only when authorized and follows the
+skill's execution rules.

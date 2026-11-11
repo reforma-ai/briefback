@@ -17,13 +17,10 @@ review trail.
 2. **Why** — the stage intent (stage briefing, user request, settled constraints
    that affect this diff)
 
-When subagents are available, use a reviewer separate from the stage's
-implementer. When other stages are in progress, give an explicit stage diff and
-ownership boundaries so their changes
-stay outside this review. Review may change affected consumers beyond those
-boundaries: coordinate with their owners or pause overlapping writers before
-fixing them. Isolated workspaces also need coordination when fixes change a
-shared contract. Verify the integrated stage result before committing it.
+Use a reviewer separate from the implementer when subagents are available.
+During concurrent work, provide the stage's diff and coordinate fixes that
+overlap another worker's changes or shared contracts. Verify the integrated
+result before committing.
 
 When it finishes, relay its return. Do not re-review.
 
