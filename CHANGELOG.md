@@ -1,5 +1,13 @@
 # @reforma/briefback
 
+## 2.1.0
+
+### Minor Changes
+
+- 6537211: Add concise rules for optional delegation and parallel work across ready stages
+  and tasks. Preserve user scope, per-stage review and commit tracking, and active
+  worker ownership through handoffs.
+
 ## 2.0.4
 
 ### Patch Changes
