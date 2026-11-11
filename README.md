@@ -73,9 +73,9 @@ then build and review the confirmed change.
 
 - **Decisions stay yours.** The agent looks up facts and challenges assumptions;
   you settle product and design choices.
-- **Scope stays reviewable.** It implements, verifies, and reviews one coherent
-  stage before starting the next. Plans and handoffs preserve context when work
-  spans stages or chats.
+- **Scope stays reviewable.** Each coherent stage is verified, reviewed, and
+  committed separately. Independent work can run in parallel within your agreed
+  scope. Plans and handoffs preserve context across stages or chats.
 - **Process follows the task.** Research and a written plan are used when
   needed. A typo or one-line fix does not need the loop.
 
@@ -84,12 +84,12 @@ then build and review the confirmed change.
 ```text
 Research → Grill → Plan → Stage → Review → Commit
                           ↑                   │
-                          └───── Repeat ─────┘
+                          └── Ready stages ─┘
 ```
 
 Grill is where you settle decisions with the agent. Each stage is implemented,
-checked, and reviewed before the next starts. Research is for unfamiliar areas;
-a written plan is for work that needs coordination across stages or chats.
+checked, reviewed, and committed before its dependent stages start. Research is
+for unfamiliar areas; a written plan coordinates work across stages or chats.
 
 [Full workflow and modes](docs/workflow.md)
 

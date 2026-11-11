@@ -23,7 +23,8 @@ An explicit Plan request still writes a plan. Do not implement.
 
 > Keep this plan current during implementation.
 > Check off tasks as their outcomes are completed.
-> Check a stage only after its done-when and verification pass.
+> Check a stage only after done-when, verification, review, and commit
+> (or staging per project rules).
 > Record scope changes before leaving the stage.
 > Record landed commits under the stage they implement.
 
@@ -42,6 +43,8 @@ An explicit Plan request still writes a plan. Do not implement.
 - <confirmed no>
 
 ## Stage 1 — <title>
+
+**Depends on:** None.
 
 **This stage:** 2–4 sentences for someone who was not in this chat. Why this
 stage exists, what coherent outcome it reaches, and which settled decisions it
@@ -62,6 +65,8 @@ encodes. Not a file list.
 
 ## Stage 2 — <title>
 
+**Depends on:** Stage 1.
+
 **This stage:** …
 
 - [ ] Complete
@@ -79,20 +84,23 @@ encodes. Not a file list.
 **Decisions** is the grill, durable. **This stage** is the briefing for one
 implementation and review boundary. Tasks are outcomes. **Files** are the map.
 
-Nested tasks are progress. Check **Complete** only after done-when and verify
-pass. The next stage starts from an unchecked Complete box, not a checked child.
+Nested tasks are progress; a checked child does not complete the stage.
+
+## Dependencies and delegation
+
+**Depends on** lists actual prerequisite stages or `None`, without cycles.
+Number prerequisites before their dependents. Make ownership and shared contracts
+clear through **Files** and tasks so independent stages can run concurrently.
+Within a complex stage, identify useful independent assignments and their combined
+verification. Keep tightly coupled work together; do not add stages or scaffolding
+merely to create parallel work. Execution follows the skill's shared rules.
 
 ## Keep current
 
-Maintain the plan from approval through implementation. As each task's outcome
-is completed, check it off even if the stage is still in progress. Reopen tasks
-when later work invalidates them, and update remaining tasks when scope changes.
-Do this as work happens, not only at stage completion or handoff.
-
-After work lands in a commit, add its hash and a short description under the
-relevant stage's **Commits**. Record partial stage commits too, so another agent
-can find which commit implements each outcome. Replace `None yet.` only with
-actual commit references; completed but uncommitted work keeps that label.
+The coordinator updates the plan as workers report results: check completed
+tasks, reopen invalidated work, and revise remaining tasks and dependencies.
+Record each landed commit's hash and short description under its stage's
+**Commits**, including partial commits. Keep `None yet.` until a commit exists.
 
 ## Stage boundaries
 
@@ -158,8 +166,10 @@ relevant to its scope; the overall feature may still need later stages.
 7. Every stage leaves the repository internally consistent and passes its
    scoped verification. It need not complete or independently ship the whole
    feature.
+8. Dependencies name real prerequisites without cycles. Any concurrent work has
+   compatible ownership and contracts, and a way to verify its combined result.
 
 ## Output
 
-Print the path. The implementer starts with the first stage whose Complete box is
-unchecked, in this context or a new one.
+Print the path. Implementation starts only when authorized and follows the
+skill's execution rules.

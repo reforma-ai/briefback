@@ -7,7 +7,7 @@ modes and names artifact paths.
 ```text
 Research → Grill → Plan → Stage → Review → Commit
                           ↑                     │
-                          └──── Next stage ─────┘
+                          └──── Ready stages ───┘
 ```
 
 Skip Research when the area is already clear. Use Plan only when sequencing,
@@ -42,21 +42,18 @@ several stages, non-obvious dependencies, or a likely context handoff. Compact,
 obvious work continues at step 4 without a plan file.
 
 **Done when:** `.briefback/<feature>/plan.md` exists with the settled list and
-ordered unchecked stages, or the plan was skipped because the confirmed scope
-is compact and clear in the conversation.
+unchecked stages with dependencies and work boundaries, or the plan was skipped
+because the confirmed scope is compact and clear in the conversation.
 
-## 4. Implement one stage
+## 4. Execute authorized stages
 
-Implement only the first stage whose Complete box is unchecked. Nested tasks
-are progress inside that stage. Without a plan, use the confirmed reading and
-keep the current stage reviewable. Load project craft skills named in
-`AGENTS.md`. Run `briefback tdd` for test-first work.
+Follow the skill's execution rules to select ready stages within the user's
+authorized scope and coordinate any subagents or parallel work. Without a plan,
+use the confirmed reading and keep the work reviewable. Load project craft
+skills named in `AGENTS.md`. Run `briefback tdd` for test-first work.
 
-Keep the plan current as work happens: check off completed tasks, reopen tasks
-when needed, and revise remaining work as scope changes.
-
-**Done when:** the stage meets its verify checks, its tasks and Complete box are
-checked (if a plan exists), and later stages match what remains.
+**Done when:** each implemented stage meets its verification checks and is ready
+for review.
 
 ## 5. Review
 
@@ -71,14 +68,14 @@ every unfixed problem is in front of the user with how to fix it.
 
 ## 6. Commit
 
-Commit with the project's normal workflow, then return to step 4 for the next
-unchecked stage. When a plan exists, record each landed commit's hash and a
-short description under the stage it implements, including partial stage
-commits.
+Commit each verified and reviewed stage separately through the project's normal
+workflow. Record its commit hashes and short descriptions in the plan when
+present, including partial commits, then mark Complete. Return to step 4 for
+newly ready work within the authorized scope.
 
 **Done when:** the stage is committed (or staged per project rules), landed
-commits are recorded in the plan when present, and the next stage is identified
-or the confirmed scope is complete.
+commits and completion are recorded in the plan when present, and remaining
+authorized work is identified or complete.
 
 ## 7. Handoff (fresh context)
 

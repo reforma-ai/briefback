@@ -17,6 +17,11 @@ review trail.
 2. **Why** — the stage intent (stage briefing, user request, settled constraints
    that affect this diff)
 
+Use a reviewer separate from the implementer when subagents are available.
+During concurrent work, provide the stage's diff and coordinate fixes that
+overlap another worker's changes or shared contracts. Verify the integrated
+result before committing.
+
 When it finishes, relay its return. Do not re-review.
 
 **Subagent.** You were launched to review. Review, fix, and verify. Return

@@ -19,7 +19,7 @@ One entrypoint for an ordered development loop:
 ```text
 Research → Grill → Plan → Stage → Review → Commit
                           ↑                   │
-                          └───── Repeat ─────┘
+                          └── Ready stages ─┘
 ```
 
 ## Default behavior
@@ -50,10 +50,12 @@ brief in the same request, such as `$briefback research authentication` or
 `/briefback review the current diff`.
 
 `continue` and `implement` resume delivery rather than load another playbook.
-Read the current plan and latest handoff when they exist, then implement only
-the first unchecked stage. Without a plan, use the confirmed reading from the
-conversation or handoff. Load [references/tdd.md](references/tdd.md)
-only when the user or project requires test-first work.
+Read the current plan and latest handoff when present; otherwise use the
+confirmed reading in chat. Proceed through the agreed plan unless the user
+limits the scope, for example to Stage 1. Start unfinished stages with completed
+dependencies; preserve written order when dependencies are absent unless
+independence is established. Load [references/tdd.md](references/tdd.md) only
+when the user or project requires test-first work.
 
 ## Routing
 
@@ -82,8 +84,29 @@ only when the user or project requires test-first work.
   their outcomes are completed, reopen or revise them when work changes, and
   record landed commit hashes with a short description under the relevant stage.
 - Settle decisions before implementation. Use Plan only when sequencing, scope
-  tracking, or handoff needs a durable artifact. Implement one coherent stage
-  at a time, then review it before committing and starting the next. A stage is
-  an execution and review boundary, not necessarily a pull request or release.
+  tracking, or handoff needs a durable artifact. A stage is a verification,
+  review, and commit boundary, not necessarily a pull request or release. Mark
+  Complete after those checks and its separate commit (or staging per project
+  rules), excluding unfinished changes from other stages.
 - A phase may route to the next phase when its own completion rules say so.
   Read the next reference at that point, not earlier.
+
+## Coordinate execution
+
+The parent owns scope, assignments, integration, plan updates, and commits.
+Choose direct work or subagents, sequentially or concurrently, when gains in
+speed, quality, or token use outweigh coordination costs. Follow mode-specific
+isolation rules; work directly when subagents are unavailable. Do not split work
+just to distribute it.
+
+Give workers the outcome, relevant decisions, owned changes, and checks; collect
+concise results and blockers without duplicating their work. Parallelize ready
+stages or independent tasks within a stage only with compatible edits and shared
+contracts. Separate concurrent writers' ownership or workspaces, and sequence
+overlapping edits, including review fixes. Integrate and verify a stage's combined
+result before review.
+
+Resolve routine blockers or reassign stalled work. Start newly ready work without
+waiting for unrelated workers. Return scope or product decisions to the user
+while continuing unaffected authorized work; stop when that scope is complete
+or further progress needs user input.
