@@ -15,7 +15,7 @@ review trail.
 
 1. **What changed** — scoped paths, or the git range to diff
 2. **Why** — the stage intent (stage briefing, user request, settled constraints
-   that affect this diff)
+   that affect this diff) and its **Done when** and **Verify**
 
 Use a reviewer separate from the implementer when subagents are available.
 During concurrent work, provide the stage's diff and coordinate fixes that
@@ -161,7 +161,9 @@ stop. Do not refactor to prove the review was active.
 No pass / done / clean claim without a command you ran in **this** turn.
 Identify the command → run it full → read exit and failures → then claim.
 
-Use the project's test and lint for the scoped files.
+Use the project's test and lint for the scoped files. Do not weaken the stage's
+**Verify** check to make it pass; if that check must change, say so in the
+return.
 
 Before a refactor, establish the behavior to preserve. Use existing checks;
 add focused characterization coverage only where needed. Verify each coherent

@@ -69,13 +69,13 @@ every unfixed problem is in front of the user with how to fix it.
 ## 6. Commit
 
 Commit each verified and reviewed stage separately through the project's normal
-workflow. Record its commit hashes and short descriptions in the plan when
-present, including partial commits, then mark Complete. Return to step 4 for
-newly ready work within the authorized scope.
+workflow. Record its commit hashes, short descriptions, and what was checked in
+the plan when present, including partial commits, then mark Complete. Return to
+step 4 for newly ready work within the authorized scope.
 
 **Done when:** the stage is committed (or staged per project rules), landed
-commits and completion are recorded in the plan when present, and remaining
-authorized work is identified or complete.
+commits, their checks, and completion are recorded in the plan when present, and
+remaining authorized work is identified or complete.
 
 ## 7. Handoff (fresh context)
 
@@ -92,5 +92,8 @@ become a project page. It updates the existing domain page when one exists.
 Otherwise it writes into the human docs tree, or
 `.briefback/docs/<domain>/`, then removes the packaged
 `.briefback/<slug>/` working files.
+
+When the work leaves durable decisions and no Document step is planned, name
+them in the closing report and offer to record them.
 
 **Done when:** the domain page is current, or the step was skipped.

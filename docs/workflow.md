@@ -63,7 +63,7 @@ In a normal chat, Plan writes `.briefback/<slug>/plan.md`. In Native Plan mode, 
 
 The plan keeps the settled Grill decisions and divides the feature into coherent implementation stages. A stage has one clear outcome and a practical check; it is not a quota of files or lines, and it does not need to be an independently deployable release. One real pull request may contain several stages. Each stage records why it exists, its outcome, which files it expects to change, and its prerequisites in `Depends on`, so another agent can pick it up without replaying the Grill conversation.
 
-Dependencies expose independent work. A shared-contract stage might unblock parallel backend and frontend stages, followed by integration that depends on both. A complex stage can also contain independent assignments with a combined check.
+Dependencies expose independent work. A shared-contract stage might unblock parallel backend and frontend stages, followed by integration that depends on both. A complex stage can also contain independent assignments with a combined check. Repetitive work across many similar targets, such as a migration, starts with one pilot target that is verified and reviewed before the rest.
 
 Lower-level work often comes first: behavior-preserving refactoring, shared types, backend work, then the interface that uses them. That is a common sequence, not a template. Substantial backend and frontend changes normally stay in separate stages; a small, tightly coupled vertical change can stay together. Feature-local wiring should remain with the interface that first needs it.
 
@@ -75,7 +75,7 @@ The agent keeps the plan current as the work changes.
 
 The agent loads relevant skills named in `AGENTS.md`. If implementation spills into a later stage, it updates the plan when one exists instead of quietly expanding the current one.
 
-The parent keeps `plan.md` current as tasks finish or scope changes. A stage becomes Complete after verification, review, and commit (or staging per project rules).
+The parent keeps `plan.md` current as tasks finish or scope changes. A stage becomes Complete after verification, review, and commit (or staging per project rules). When several chats work from one plan, each marks the stage it takes in the plan before starting.
 
 ### 5. Run an agent review
 
@@ -85,17 +85,17 @@ Use a separate reviewer when subagents are available, coordinating fixes with an
 
 ### 6. Review and commit
 
-The parent commits each stage separately and records its commit hashes and short descriptions in the plan when present, including partial commits. Newly ready work can start without waiting for unrelated stages.
+The parent commits each stage separately and records its commit hashes, short descriptions, and what was and was not checked in the plan when present, including partial commits. Newly ready work can start without waiting for unrelated stages.
 
 ### 7. Refresh the context
 
-The handoff records what shipped, what remains, authorized next work, and any active worker ownership. Attach it with the plan when present so the next chat can resume without duplicating assignments.
+The handoff records what shipped, what remains, approaches tried and dropped, authorized next work, and any active worker ownership. Attach it with the plan when present so the next chat can resume without duplicating assignments.
 
 ### 8. Archive or document the result
 
 When requested, the agent turns research, a plan, or shipped work into a durable project page. It updates an existing page for that domain when one exists; otherwise it writes to the project's docs tree or `.briefback/docs/<domain>/`. It then removes the packaged `.briefback/<slug>/` working files.
 
-Skip this step when the work does not need a page.
+Skip this step when the work does not need a page. Even then, if the work settled a decision that will shape other areas later, the agent names it when it finishes and offers to record it on the domain page, with the reason and when to revisit it. It writes nothing until you agree.
 
 ## Artifacts and fresh chats
 

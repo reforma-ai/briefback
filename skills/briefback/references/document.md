@@ -26,6 +26,10 @@ No page owns this domain → create one page in that tree, named for the
 domain. No human docs tree → write `.briefback/docs/<domain>/`. Do not
 create a repo-root `docs/`.
 
+When `.briefback/docs/` holds about five pages or more, keep one `index.md`
+there: a link and what each page answers. In a project docs tree, add the page
+to its existing navigation instead.
+
 Read that page (or neighbors in the docs tree) for tone and terms.
 
 Write in the **project's** language. Read it from the page you are updating,
@@ -55,7 +59,16 @@ first success, then links to the other three.
 
 ## 4. Write
 
-Ground claims in files you read. A path you cite exists, or mark it planned.
+Ground claims in files you read. A path you cite exists, or mark it planned;
+treat a plan's unbuilt items the same way, or leave them out. When updating a
+page, re-check the claims your change touches against the code, and mark any you
+could not check as unverified in the sentence, not in a new section.
+
+Carry forward durable decisions: what was chosen, why, and when to revisit it.
+Put them under a short Decisions heading on the domain's explanation page, or
+where the project already keeps decision records. Leave out decisions that mattered only to this
+work.
+
 Lead with the thing the reader came for. Show commands, requests, and paths.
 Don't wait for outline approval unless the user asked for a structure, or the
 work is a multi-page set of **different jobs**. Redact secrets.
@@ -67,7 +80,8 @@ Write with the picked job's shape in
 
 Delete `.briefback/<slug>/` working files that were packaged (research, plan,
 handoff). Leave `.briefback/docs/`, `.briefback/config.json`, and other slugs.
-Nothing to delete when the source was only this chat.
+Nothing to delete when the source was only this chat. Keep the files while
+another chat or worker still uses the slug.
 
 Print the page path and what was removed.
 

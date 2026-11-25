@@ -82,12 +82,26 @@ when the user or project requires test-first work.
   `.briefback/<feature>/` slug so later phases can find them.
 - Keep an existing plan current throughout implementation: check off tasks as
   their outcomes are completed, reopen or revise them when work changes, and
-  record landed commit hashes with a short description under the relevant stage.
+  record landed commit hashes with a short description and what was checked
+  under the relevant stage.
 - Settle decisions before implementation. Use Plan only when sequencing, scope
   tracking, or handoff needs a durable artifact. A stage is a verification,
   review, and commit boundary, not necessarily a pull request or release. Mark
   Complete after those checks and its separate commit (or staging per project
   rules), excluding unfinished changes from other stages.
+- Existing docs and old `.briefback/` notes are claims, not facts. Check what
+  the work depends on against code, config, or a command; when they disagree,
+  trust the code and tell the user if that changes the work. Mark a claim you
+  could not check as unverified; do not present it as true or discard it as
+  false. A check result holds only for the state it ran on: after later edits,
+  rerun it or call it stale.
+- Your closing report says what you ran and saw, what stayed unchecked, and
+  anything skipped or deferred. A review's return keeps its own format.
+- A settled decision that will keep shaping work in other areas after this one
+  ends is a durable decision: keep its reason and when to revisit it with the
+  decision. When the work ends with no Document step planned, name durable
+  decisions in the report and offer to record them (see Document). Write nothing
+  until the user agrees or asks for Document.
 - A stage that writes or changes tests follows
   [references/testing.md](references/testing.md), test-first or not. Tell any
   worker that writes tests to read it.
@@ -109,7 +123,15 @@ contracts. Separate concurrent writers' ownership or workspaces, and sequence
 overlapping edits, including review fixes. Integrate and verify a stage's combined
 result before review.
 
-Resolve routine blockers or reassign stalled work. Start newly ready work without
+A worker writes only the files its assignment names. A shared file (the plan, a
+project page, an index) has one owner, usually the parent. Before editing a
+shared file, re-read it and change it in place, keeping other people's text; if
+it changed meanwhile, re-read and redo the edit. When several chats share one
+plan, re-read it and mark the stage you take (who or which branch) before
+starting; clear the mark at Complete.
+
+Resolve routine blockers. Retry a stalled or failed worker once with the reason,
+then change the approach, reassign, or report it. Start newly ready work without
 waiting for unrelated workers. Return scope or product decisions to the user
 while continuing unaffected authorized work; stop when that scope is complete
 or further progress needs user input.

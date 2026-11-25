@@ -26,7 +26,7 @@ An explicit Plan request still writes a plan. Do not implement.
 > Check a stage only after done-when, verification, review, and commit
 > (or staging per project rules).
 > Record scope changes before leaving the stage.
-> Record landed commits under the stage they implement.
+> Record landed commits and their checks under the stage they implement.
 
 **Goal:** one sentence
 **Approach:** 2–3 sentences — how the pieces fit
@@ -100,7 +100,9 @@ merely to create parallel work. Execution follows the skill's shared rules.
 The coordinator updates the plan as workers report results: check completed
 tasks, reopen invalidated work, and revise remaining tasks and dependencies.
 Record each landed commit's hash and short description under its stage's
-**Commits**, including partial commits. Keep `None yet.` until a commit exists.
+**Commits**, including partial commits. Next to each, write `checked:` with what
+ran and showed, and `not checked:` with what stayed unchecked. `checked: none`
+is allowed and stays visible. Keep `None yet.` until a commit exists.
 
 ## Stage boundaries
 
@@ -131,6 +133,8 @@ relevant to its scope; the overall feature may still need later stages.
   reliable implementation pass.
 - Task count is a warning that a stage may be too large, not an automatic reason
   to split it.
+- Repetitive work across many similar targets, such as a migration, starts with
+  one pilot target. Verify and review it before the rest.
 
 ## Rules
 
@@ -138,7 +142,8 @@ relevant to its scope; the overall feature may still need later stages.
   `create`.
 - One approach. No menu, no TBD, no “handle edge cases”, no “similar to Stage n”.
 - **Decisions** is one bullet per confirmed grill answer: what we will do.
-  Discarded options stay out. **Out of scope** is the confirmed nos. Every
+  Discarded options stay out; a durable decision keeps its reason and revisit
+  condition. **Out of scope** is the confirmed nos. Every
   confirmed grill answer lands in one of those two lists.
 - **This stage** applies the decisions that bind this stage. An agent who never
   saw the grill should understand the job from **Decisions** plus this

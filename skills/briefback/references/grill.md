@@ -72,8 +72,13 @@ before this confirmation.
 ```
 **Settled**
 - <confirmed answer>
-- <confirmed answer>
+- <durable decision> — <why; revisit if …>
 ```
+
+Add the reason and revisit condition only to a durable decision: one that will
+keep shaping work in other areas after this one ends. Other items stay one line.
+The grill writes no decision record; the end of the work offers one (see the
+skill's shared rules).
 
 After confirmation, choose the next step. Do not ask which skill to run next.
 

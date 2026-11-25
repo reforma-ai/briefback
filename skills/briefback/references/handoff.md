@@ -11,9 +11,10 @@ Loop: [Briefback](../SKILL.md), plus repo-root `BRIEFBACK.md` when present.
 1. **Find the context.** Use the plan the user named, the last handoff, or the
    confirmed reading in this thread. A plan is optional.
 2. **Current work.** Record changed or active stages, shipped paths and commits,
-   pending checks, and remaining work. Include active workers' ownership,
-   workspaces, and how to collect results. Collect or stop workers that cannot
-   continue, preserving unfinished changes before transferring ownership.
+   pending checks, remaining work, and approaches tried and dropped, with why.
+   Include active workers' ownership, workspaces, and how to collect results.
+   Collect or stop workers that cannot continue, preserving unfinished changes
+   before transferring ownership.
 3. **Bleed.** Work that belongs to a later stage but landed, or should have.
    Update the plan's tasks, dependencies, and completion to match reality.
 4. **Next work.** List ready work within the authorized scope, its done-when,
@@ -48,6 +49,7 @@ scope: <authorized plan/stages; confirmed reading when path is none>
 stage: <title and progress>
 shipped: <paths, commit hashes if any>
 remaining: <work, pending checks, and blockers | none>
+dead ends: <approach tried and dropped, and why | none>
 worker: <active owner, workspace/branch, and how to collect results | none>
 
 ## Bleed
