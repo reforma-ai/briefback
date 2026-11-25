@@ -55,8 +55,8 @@ the user instead of getting an invented answer.
 - **Red before green.** Write the failing test first, then only enough code to pass it. Don't anticipate future tests or add speculative features.
 - **One slice at a time.** One seam, one test, one minimal implementation per cycle.
 - **Watch the color.** Red is not “wrote a test”. Run it. Confirm it fails because the behavior is missing — not a typo, import error, or existing pass. Passes immediately → you tested existing behavior; fix the test, except for a hostile slice (see Hostile slices). Errors → fix the harness until it fails correctly, then implement. Green: run the same command; claim pass only from that output.
-- **Name the break.** Before the test body, name the production change that should make it fail. Cannot name one → wrong seam.
-- **Keep or drop.** Before the next slice, apply [Keep or drop](testing.md#keep-or-drop) to the test you just wrote. Rewrite or delete a failing test in this cycle, not in review.
+- **Name the break.** Before the test body, name the production change that should make it fail. Cannot name one → wrong seam. An existing test already fails for it → skip the new test. The scenario already has a test and the new behavior is another part of its outcome → add it to that test and run that test red for it before implementing.
+- **Keep or drop.** Before the next slice, apply [Keep or drop](testing.md#keep-or-drop) to the test you just wrote. Rewrite or delete a failing test in this cycle, not in review. A new test that makes an earlier one redundant replaces it in the same cycle.
 - **Refactoring is not part of the loop.** It belongs to the review stage (see
   [review.md](review.md)), not the red → green implementation cycle.
 
@@ -72,5 +72,5 @@ One cycle is complete when:
 4. No speculative features or bulk test suites were added in that cycle.
 5. The test passes Keep or drop.
 
-A seam is done when its hostile cases, chosen from the contract, each completed
-a cycle.
+A seam is done when each of its hostile cases, chosen from the contract, is
+covered by a test that completed a cycle.

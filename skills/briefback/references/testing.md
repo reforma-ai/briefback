@@ -18,7 +18,13 @@ it("should confirm checkout for a valid cart", async () => {
 - Public API only
 - Survives internal refactors
 - Describes WHAT, not HOW
-- One logical assertion per test
+- One scenario per test: one action under test, its whole outcome asserted
+  together (result and side effects, one expected value) rather than a run of
+  field checks. Leave wording out of that value (see Copy-coupled). Different
+  actions or inputs with different outcomes are different tests
+- Plain: the values that matter are literal in the test. Helpers build setup,
+  not the expected value. No loops or conditionals in the body; one test per row
+  of a case table (`it.each`) is fine
 
 ## Bad tests
 
@@ -51,7 +57,9 @@ it("should make a created user retrievable", async () => {
 });
 ```
 
-**Tautological** — expected value restates the implementation.
+**Tautological** — expected value restates the implementation, or is pasted from
+what the code returned when you ran it. Take expected values from the brief, the
+contract, or a worked example.
 
 ```typescript
 // BAD
@@ -94,12 +102,29 @@ expect(screen.getByTestId("save")).toBeDisabled();
 expect(await submit(form)).toMatchObject({ error: { code: "invalid_email" } });
 ```
 
-Find elements by role or test id, and build any text query from the translation
-key, not a literal. Assert state, or the code or type an error carries, not its
-wording. Assert exact text or markup only when it is the contract (a documented
-API message, CLI output, legal text, generated HTML), and take it from the spec,
-never from the locale file or the current output. Whole-tree snapshots belong
-here too: they fail on every harmless tweak and get approved unread.
+Find elements by role or test id. Where text must be queried, have the test's
+translate function return the key and query by the key; if it cannot, build the
+query from the key, not a literal. Assert state, or the code or type an error
+carries, not its wording. Assert exact text or markup only when it is the
+contract (a documented API message, CLI output, legal text, generated HTML), and
+take it from the spec, never from the locale file or the current output.
+Snapshots belong here too unless they are small (a few dozen lines) and every
+line is contract you checked against the spec: larger ones fail on every
+harmless tweak and get approved unread.
+
+**Duplicate** — walks a path another test already walks and asserts the same kind
+of outcome. Merge its assertion into that test or delete it: nothing that could
+realistically break goes unnoticed. Typical forms:
+
+- One test per field of a single result, each repeating the same setup. Assert
+  the whole outcome in one test.
+- Several inputs that reach the same branch and get the same outcome (`null`,
+  `undefined`, a number where a string belongs). Keep one.
+- A test whose breaks another test at the same seam already catches. Keep the
+  one that states the whole outcome.
+
+Inputs that land on different outcomes are not duplicates: each side of a limit
+(7 and 8 characters) stays.
 
 **Low-value mapping tests** — asserting `.map` / array shape with no behavior.
 Skip or drop them rather than warping production code so a test can reach
@@ -112,7 +137,8 @@ the interface under test, not from the implementation, so they probe what the
 code must survive rather than what it happens to do. Ask what a careless or
 hostile caller or environment could do to that interface. Take the few that apply
 and could really hurt, and skip categories it cannot meet (a pure formatter has
-no authority or concurrency):
+no authority or concurrency). Inputs that fail the same way are one case (see
+Duplicate). Categories:
 
 - **Input** — empty, missing, wrong type, at and past a limit, duplicated,
   malformed.
@@ -131,15 +157,22 @@ code, not the test.
 
 ## Keep or drop
 
-Keep a test only when both hold:
+Keep a test only when all three hold:
 
 1. **Fails on wrong behavior.** Break the production behavior it covers (wrong
    branch, missing side effect, empty return, no-op) and it goes red.
 2. **Survives harmless change.** Rewording copy, switching locale, renaming a
    class, reshaping markup, or refactoring internals leaves it green. Text or
    markup that is the contract is not a harmless change.
+3. **Catches something no other test does.** First fold tests that repeat one
+   scenario's setup into one whole-outcome test. Then some realistic break must
+   turn it red and leave every other test at the same seam green. If every break
+   that fails it also fails another test, delete it; of two that overlap fully,
+   keep one. When unsure, apply the break, run the tests, and undo exactly that
+   edit. Covered lines do not decide this: the same lines can carry different
+   outcomes.
 
 Failing the first means it asserts nothing or restates the code. Failing the
-second means it is coupled to copy or implementation. Rewrite it at a stable
-handle, or delete it. A missing test is better than one that passes for the wrong
-reason.
+second means it is coupled to copy or implementation. Failing the third means it
+duplicates another test. Rewrite it at a stable handle, merge it, or delete it.
+A missing test is better than one that passes for the wrong reason.
