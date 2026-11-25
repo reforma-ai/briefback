@@ -13,7 +13,7 @@ You can also request a specific mode directly, in ordinary language or with an e
 | Research | Saves findings that should survive the current chat | `/briefback research` |
 | Grill | Works through assumptions and open decisions with you | `/briefback grill` |
 | Plan | Records implementation stages, dependencies, and work boundaries | `/briefback plan` |
-| TDD | Works through one red-green slice at a time | `/briefback tdd` |
+| TDD | Works through one red-green slice at a time, including cases that try to break the code | `/briefback tdd` |
 | Review | Reviews and refactors a stage, then fixes defects | `/briefback review` |
 | Handoff | Saves the context needed to continue in another chat | `/briefback handoff` |
 | Document | Turns research, a plan, or a shipped change into a project page | `/briefback document` |

@@ -88,6 +88,9 @@ when the user or project requires test-first work.
   review, and commit boundary, not necessarily a pull request or release. Mark
   Complete after those checks and its separate commit (or staging per project
   rules), excluding unfinished changes from other stages.
+- A stage that writes or changes tests follows
+  [references/testing.md](references/testing.md), test-first or not. Tell any
+  worker that writes tests to read it.
 - A phase may route to the next phase when its own completion rules say so.
   Read the next reference at that point, not earlier.
 
