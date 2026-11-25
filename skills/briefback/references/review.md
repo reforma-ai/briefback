@@ -112,12 +112,15 @@ smallest refactor that fully resolves the problem, not the smallest edit.
    dynamic `import()` and string path lookups. Zero uses → delete. Public
    package export without proof → ask. Pre-existing dead outside scope → leave.
 7. **Tests in scope** — check that risky new branches, parsers, authorization,
-   and data writes have tests that fail when behavior breaks. Add focused
+   and data writes have tests that fail when behavior breaks, including the
+   [hostile cases](testing.md#hostile-cases) that matter for them. Add focused
    coverage where needed, not tests that mirror implementation or chase a
    coverage number. Keep real behavior tests; delete mock-theater, dupes,
-   empty, or greenwash. Ask whether a no-op implementation or wrong result
-   would still pass. Assert outcomes through the consumer's interface.
-   Do not reshape prod to please a weak test.
+   empty, or greenwash. Apply [Keep or drop](testing.md#keep-or-drop) to each
+   test the stage adds or changes: would a no-op implementation or wrong result
+   still pass, and would a reworded label or another locale fail it? Rewrite or
+   delete the ones that fail either check. Assert outcomes through the
+   consumer's interface. Do not reshape prod to please a weak test.
 
 Before fixing or reporting a suspected defect, confirm the concrete input or
 situation, the path that reaches it, and the wrong result. Re-read the code and
