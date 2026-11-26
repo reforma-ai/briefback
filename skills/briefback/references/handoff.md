@@ -6,7 +6,7 @@ attach. Together with the plan, it is the durable source of truth.
 ## Steps
 
 1. **Find the context.** Use the plan the user named, the last handoff, or the
-   confirmed reading in this thread. A plan is optional.
+   settled reading in this thread. A plan is optional.
 2. **Current work.** Record changed or active stages, shipped paths and commits,
    pending checks, remaining work, and material dead ends, with why.
    Include active workers' ownership, workspaces, and how to collect results.
@@ -38,7 +38,7 @@ skill's dependency and execution rules.
 
 path: <file the next chat can open | none>
 sync: updated | unchanged | not used
-scope: <authorized plan/stages; confirmed reading when path is none>
+scope: <authorized plan/stages; settled reading when path is none>
 
 ## Current work
 

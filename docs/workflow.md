@@ -42,11 +42,12 @@ The agent starts Grill after research, or immediately when the area is already f
 
 The agent explains its reading of the task, lists the assumptions and open decisions, and recommends an answer for each one. You confirm or correct the list. If an answer creates another important question, Grill keeps going.
 
-Once you confirm the settled decisions, the agent chooses the next phase.
+If the agent must work autonomously, it resolves the same questions itself or
+delegates decisions to a subagent. Once settled, it chooses the next phase.
 
 ### 3. Plan implementation stages
 
-Planning follows Grill when the work needs durable coordination across several stages, non-obvious dependencies, or a likely context handoff. Work that fits one or two compact stages skips Plan, even when it touches backend and frontend. The confirmed reading stays in the chat, and the agent offers to implement it next.
+Planning follows Grill when the work needs durable coordination across several stages, non-obvious dependencies, or a likely context handoff. Work that fits one or two compact stages skips Plan, even when it touches backend and frontend. The settled reading stays in the chat. The agent offers implementation, or continues directly when autonomous and authorized.
 
 In a normal chat, Plan writes `.briefback/<slug>/plan.md`. In Native Plan mode, the agent uses the client's planning flow and native plan artifact instead.
 
@@ -58,7 +59,7 @@ Lower-level work often comes first: behavior-preserving refactoring, shared type
 
 ### 4. Execute authorized stages
 
-“Implement it” covers the agreed plan unless you specify a narrower limit, such as “only Stage 1.” The agent selects ready stages and chooses direct, delegated, or parallel execution under the skill's rules. Without a plan, it uses the confirmed reading. Independent work runs concurrently when it saves time or context. The parent integrates and checks results and starts newly ready work without waiting for unrelated stages.
+“Implement it” covers the agreed plan unless you specify a narrower limit, such as “only Stage 1.” The agent selects ready stages and chooses direct, delegated, or parallel execution under the skill's rules. Without a plan, it uses the settled reading. Independent work runs concurrently when it saves time or context. The parent integrates and checks results and starts newly ready work without waiting for unrelated stages.
 
 The agent loads relevant skills named in `AGENTS.md`. If implementation spills into a later stage, it updates the plan when one exists instead of quietly expanding the current one.
 

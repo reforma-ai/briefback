@@ -2,10 +2,9 @@
 
 Write **one** plan another developer or agent can pick up without this chat.
 
-Open decisions → read [grill.md](grill.md), then resume after the user confirms
-the reading.
+Open decisions → read [grill.md](grill.md), then resume once settled.
 When Plan was selected automatically, obvious work that fits one or two compact
-stages can keep the confirmed reading in chat and offer implementation instead.
+stages can keep the settled reading in chat and follow Grill's next-step rules.
 An explicit Plan request still writes a plan. Do not implement.
 
 ## Where
@@ -33,14 +32,14 @@ An explicit Plan request still writes a plan. Do not implement.
 
 **Decisions**
 
-- <confirmed grill answer>
-- <confirmed grill answer>
+- <settled grill answer>
+- <settled grill answer>
 
 **Reuse:** existing APIs this plan calls (`path`)
 
 ## Out of scope
 
-- <confirmed no>
+- <settled no>
 
 ## Stage 1 — <title>
 
@@ -130,9 +129,9 @@ intermediate stage.
 - Ground every stage in the files listed under it. A cited path exists, or it is
   `create`.
 - One approach. No menu, no TBD, no “handle edge cases”, no “similar to Stage n”.
-- **Decisions** is one bullet per confirmed grill answer: what we will do.
+- **Decisions** is one bullet per settled grill answer: what we will do.
   Keep durable decisions with their reason and revisit condition. **Out of
-  scope** is the confirmed nos; discard other options.
+  scope** is the settled nos; discard other options.
 - **This stage** applies the decisions that bind this stage. An agent who never
   saw the grill should understand the job from **Decisions** plus this
   paragraph, the tasks, and the files.
@@ -145,7 +144,7 @@ intermediate stage.
 
 ## Self-check
 
-Check the rules above. Every confirmed answer maps to a stage or **Out of scope**.
+Check the rules above. Every settled answer maps to a stage or **Out of scope**.
 A new agent can complete each stage from the plan alone.
 
 ## Output

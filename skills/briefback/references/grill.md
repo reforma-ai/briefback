@@ -8,6 +8,14 @@ Do **not** create extra docs, ADRs, or tickets as you go. Capture settled
 decisions in the reply; if a lasting convention belongs in the project's
 agent guide, say so and wait for the user to ask you to write it.
 
+## Autonomous execution
+
+If agent instructions require autonomous work, follow the same decision tree
+and fact-finding, but resolve each round internally. Choose your recommended
+answers or delegate decisions to a subagent. Record the **Settled** list in
+chat. Skip the interactive question format and do not wait for user confirmation;
+explicit user constraints and required approvals still apply.
+
 ## Rounds
 
 Start by restating the task, the decisions already implied by the request, and
@@ -55,7 +63,7 @@ repo, look it up — don't ask the user for anything you can read. Follow the
 nearest project guide (`AGENTS.md` or equivalent). A running lookup is an
 unsettled prerequisite: ask the rest of the frontier now.
 
-The _decisions_ are the user's. Put each to them and wait.
+In interactive mode, the _decisions_ are the user's. Put each to them and wait.
 
 Push back when a simpler approach fits. Name blockers instead of designing
 around them. Recommend the project's default unless the user has a reason not
@@ -65,26 +73,27 @@ code.
 ## Done
 
 The frontier is empty and every branch has been visited. Restate the settled
-list as bullets — what we will do, not the discarded options. Wait for the
-user to confirm that list. Nothing is silently assumed. Do not implement
-before this confirmation.
+list as bullets — what we will do, not the discarded options. In interactive
+mode, wait for user confirmation. In autonomous mode, record your decisions
+and continue. Do not implement until all decisions are settled.
 
 ```
 **Settled**
-- <confirmed answer>
+- <settled answer>
 - <durable decision> — <why; revisit if …>
 ```
 
 Only durable decisions get a reason and revisit condition. Keep the line in
 the plan; Document carries it into the page.
 
-After confirmation, choose the next step. Do not ask which skill to run next.
+Once settled, choose the next step. Do not ask which skill to run next.
 
 - A native planning flow is already open → continue there.
-- The confirmed work needs durable coordination across several stages,
+- The settled work needs durable coordination across several stages,
   non-obvious dependencies, or a likely context handoff → read
   [plan.md](plan.md) and write the plan in this chat. The settled list becomes
   **Decisions** in the plan; do not leave it only in this reply.
 - The work is obvious enough for one or two compact stages → keep the settled
-  list in this chat and offer to implement it next. Do not create a plan only
-  because the change crosses backend, frontend, or other project areas.
+  list in this chat and offer to implement it next (continue directly in
+  autonomous mode when authorized). Do not create a plan only because the
+  change crosses backend, frontend, or other project areas.

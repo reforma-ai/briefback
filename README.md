@@ -35,8 +35,8 @@ without you naming it. For example:
 
 > Research how authentication works in this project.
 
-The agent chooses the relevant mode from your request. For a change, it
-checks the repo, recommends answers to open questions, and waits for you to
+The agent chooses the relevant mode from your request. For a change in interactive
+mode, it checks the repo, recommends answers to open questions, and waits for you to
 confirm what to build. There are no mode commands to memorize.
 
 [Other installation options and updates](docs/installation.md)
