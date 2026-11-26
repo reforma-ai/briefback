@@ -69,8 +69,8 @@ Accept `code-review` as an alias for `review`. A request may include a target or
   requirements for intended behavior. Tell the user if divergence changes the
   work. Mark unchecked claims unverified. After edits, rerun affected checks or
   mark them stale.
-- Closing report: checks and results; unchecked, skipped or deferred work.
-  Review uses its own format.
+- Closing report: outcome, check results and material gaps in a few lines. Do not
+  repeat the plan, worker reports or logs. Review uses its own format.
 - Keep durable decisions (those shaping other areas later), with why and when
   to revisit them.
 - Read [references/testing.md](references/testing.md) before writing or changing
@@ -79,20 +79,22 @@ Accept `code-review` as an alias for `review`. A request may include a target or
 ## Coordinate execution
 
 The parent owns scope, assignments, integration, plan updates and commits.
-Delegate when the benefit outweighs coordination; follow mode-specific isolation
-rules or work directly if subagents are unavailable.
+Prefer concurrent execution of ready independent work when it improves speed,
+quality or context use. Work directly when delegation adds overhead or is unavailable.
+Follow mode-specific isolation rules.
 
-Brief workers on outcome, decisions, owned files and checks. Collect concise
-results and blockers without duplicating work. Parallelize ready independent
-work only with compatible contracts and disjoint edits or workspaces. Sequence
-overlapping changes, including review fixes. Integrate and verify before review.
+Settle shared contracts before launching compatible stages or assignments
+together. Give workers a short brief: outcome, decisions, owned files and checks.
+Collect only results, changed paths, checks and blockers. Do not redo their work.
+While workers run, do independent work. As each stage's assignments finish,
+integrate, verify, review and commit that stage, then start newly ready work.
+Do not wait for unrelated workers.
 
-Each shared file has one writer, usually the parent. Re-read before editing and
-preserve concurrent changes; redo the edit if needed. When multiple chats share
-a plan, the parent or user assigns stages, even across worktrees or branches.
-Workers edit only assigned files.
+One writer per file; separate overlapping work into workspaces or sequence it,
+including review fixes. The parent owns shared files; reread before editing and
+preserve concurrent changes. One parent or user assigns stages across chats and
+worktrees. Workers edit only assigned files.
 
 Resolve recoverable blockers; otherwise change approach, reassign or report.
-Start newly ready work without waiting for unrelated workers. Return scope or
-product decisions to the user while continuing unaffected work. Stop when the
-authorized scope is complete or further progress needs user input.
+Return scope or product decisions to the user while continuing unaffected work.
+Stop when authorized scope is complete or further progress needs user input.

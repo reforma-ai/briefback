@@ -86,17 +86,18 @@ Nested tasks are progress; a checked child does not complete the stage.
 ## Dependencies and delegation
 
 **Depends on** lists actual prerequisite stages or `None`, without cycles.
-Number prerequisites before their dependents. Make ownership and shared contracts
-clear through **Files** and tasks so independent stages can run concurrently.
-Within a complex stage, identify useful independent assignments and their combined
-verification. Keep tightly coupled work together; do not add stages or scaffolding
-merely to create parallel work. Execution follows the skill's shared rules.
+Number prerequisites before dependents. Expose independent stages; do not chain
+them by default. Define shared contracts and ownership in **Files** and tasks.
+Within a stage, identify useful
+parallel assignments and their combined verification. Keep tightly coupled work
+together; no extra stages or scaffolding just for parallelism.
 
 ## Keep current
 
 Keep the plan current as workers report. Under **Commits**, record each landed
-or partial commit: hash, short description, `checked:` commands and results
-(or `none`), and `not checked:` gaps. Keep `None yet.` until a commit exists.
+or partial commit on one line: hash, summary, `checked:` commands and results
+(or `none`), plus `not checked:` for material gaps. Do not copy logs. Keep
+`None yet.` until a commit exists.
 
 ## Stage boundaries
 
@@ -121,8 +122,8 @@ intermediate stage.
   reliable implementation pass.
 - Task count is a warning that a stage may be too large, not an automatic reason
   to split it.
-- Repetitive work across many similar targets, such as a migration, starts with
-  one pilot target. Verify and review it before the rest.
+- For risky repetitive work, verify and review one pilot before starting the
+  rest. Parallelize independent targets.
 
 ## Rules
 

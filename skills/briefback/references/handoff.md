@@ -8,7 +8,7 @@ attach. Together with the plan, it is the durable source of truth.
 1. **Find the context.** Use the plan the user named, the last handoff, or the
    confirmed reading in this thread. A plan is optional.
 2. **Current work.** Record changed or active stages, shipped paths and commits,
-   pending checks, remaining work, and approaches tried and dropped, with why.
+   pending checks, remaining work, and material dead ends, with why.
    Include active workers' ownership, workspaces, and how to collect results.
    Collect or stop workers that cannot continue, preserving unfinished changes
    before transferring ownership.
@@ -46,7 +46,7 @@ scope: <authorized plan/stages; confirmed reading when path is none>
 stage: <title and progress>
 shipped: <paths, commit hashes if any>
 remaining: <work, pending checks, and blockers | none>
-dead ends: <approach tried and dropped, and why | none>
+dead ends: <material discarded approach and why; omit if none>
 worker: <active owner, workspace/branch, and how to collect results | none>
 
 ## Bleed

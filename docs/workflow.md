@@ -52,13 +52,13 @@ In a normal chat, Plan writes `.briefback/<slug>/plan.md`. In Native Plan mode, 
 
 The plan keeps the settled Grill decisions and divides the feature into coherent implementation stages. A stage has one clear outcome and a practical check; it is not a quota of files or lines, and it does not need to be an independently deployable release. One real pull request may contain several stages. Each stage records why it exists, its outcome, which files it expects to change, and its prerequisites in `Depends on`, so another agent can pick it up without replaying the Grill conversation.
 
-Dependencies expose independent work. A shared-contract stage might unblock parallel backend and frontend stages, followed by integration that depends on both. A complex stage can also contain independent assignments with a combined check. Repetitive work across many similar targets, such as a migration, starts with one pilot target that is verified and reviewed before the rest.
+Dependencies expose independent work. A shared-contract stage might unblock parallel backend and frontend stages, followed by integration that depends on both. A complex stage can also contain independent assignments with a combined check. Risky repetitive work starts with one verified and reviewed pilot before the rest can run in parallel.
 
 Lower-level work often comes first: behavior-preserving refactoring, shared types, backend work, then the interface that uses them. That is a common sequence, not a template. Substantial backend and frontend changes normally stay in separate stages; a small, tightly coupled vertical change can stay together. Feature-local wiring should remain with the interface that first needs it.
 
 ### 4. Execute authorized stages
 
-“Implement it” covers the agreed plan unless you specify a narrower limit, such as “only Stage 1.” The agent selects ready stages and chooses direct, delegated, or parallel execution under the skill's rules. Without a plan, it uses the confirmed reading. Parallelism is optional; the parent remains responsible for integrating and checking each stage's result.
+“Implement it” covers the agreed plan unless you specify a narrower limit, such as “only Stage 1.” The agent selects ready stages and chooses direct, delegated, or parallel execution under the skill's rules. Without a plan, it uses the confirmed reading. Independent work runs concurrently when it saves time or context. The parent integrates and checks results and starts newly ready work without waiting for unrelated stages.
 
 The agent loads relevant skills named in `AGENTS.md`. If implementation spills into a later stage, it updates the plan when one exists instead of quietly expanding the current one.
 
@@ -70,7 +70,7 @@ Review normally runs in a subagent with the context of what changed and why. If 
 
 ### 6. Review and commit
 
-The parent commits each stage separately and records its commit hashes, short descriptions, and what was and was not checked in the plan when present, including partial commits. Newly ready work can start without waiting for unrelated stages.
+The parent commits each stage separately and records each commit, its checks and material gaps on one line in the plan, when present. Newly ready work can start without waiting for unrelated stages.
 
 ### 7. Refresh the context
 
