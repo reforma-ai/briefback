@@ -1,5 +1,12 @@
 # @reforma/briefback
 
+## 2.4.0
+
+### Minor Changes
+
+- cedac21: Keep Grill in autonomous execution: settle decisions internally or delegate them,
+  then proceed within the authorized scope without waiting for user confirmation.
+
 ## 2.3.1
 
 ### Patch Changes

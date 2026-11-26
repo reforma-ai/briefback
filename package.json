@@ -1,6 +1,6 @@
 {
   "name": "@reforma/briefback",
-  "version": "2.3.1",
+  "version": "2.4.0",
   "description": "A skill that helps coding agents challenge assumptions and agree on scope before implementation.",
   "author": "Reforma, Inc. <dev@reforma.ai>",
   "type": "module",
