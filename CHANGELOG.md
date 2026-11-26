@@ -1,5 +1,11 @@
 # @reforma/briefback
 
+## 2.3.1
+
+### Patch Changes
+
+- 689e1f6: Include the license and third-party notices in standalone Briefback skill installations.
+
 ## 2.3.0
 
 ### Minor Changes
