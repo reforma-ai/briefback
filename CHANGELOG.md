@@ -1,5 +1,23 @@
 # @reforma/briefback
 
+## 2.3.0
+
+### Minor Changes
+
+- 9b758d8: Keep decisions that outlive a task: the grill adds a reason and revisit condition
+  to those items, the plan keeps them, and Document carries them into the domain
+  page. Reports and plan commits now say what was checked and what was not,
+  existing docs are treated as claims to verify, and a claim that could not be
+  checked stays marked unverified. Add rules for shared files, coordinated stage
+  assignments, concurrent ready work, a pilot for risky repetitive work, and
+  material dead ends in handoffs.
+  Remove repeated guidance without changing the delivery loop.
+
+### Patch Changes
+
+- a925c31: Add a Credits section to the README and carry Matt Pocock's MIT notice in
+  `LICENSE` for the Grill and test-first material adapted from mattpocock/skills.
+
 ## 2.2.0
 
 ### Minor Changes
