@@ -1,10 +1,7 @@
 # Handoff
 
-Use this when unfinished work will continue in a fresh chat. Write a file the
-next chat can attach. The handoff, plus the plan when one exists, is the durable
-source of truth.
-
-Loop: [Briefback](../SKILL.md), plus repo-root `BRIEFBACK.md` when present.
+For unfinished work moving to a fresh chat, write a handoff the next chat can
+attach. Together with the plan, it is the durable source of truth.
 
 ## Steps
 

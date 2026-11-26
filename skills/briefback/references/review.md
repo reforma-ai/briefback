@@ -58,28 +58,15 @@ assumption when it affects a fix or finding. Do not design for imaginary load.
 
 ## Fix
 
-You review and you fix. Follow the nearest project guide (`AGENTS.md` or
-equivalent).
+Refactors preserve behavior; bug fixes restore behavior established by the
+brief, contracts or tests. Judge structure by nesting, branching, state held
+in mind and jumps, not line count.
 
-Refactors preserve behavior; bug fixes restore intended behavior established by
-the brief, contracts, or tests. Do not equate a safe review with a minimal diff.
-If the implementation works but its structure is harder to follow than nearby
-code, refactor it now. A refactor may rename, extract, inline, move responsibilities
-across affected files, consolidate duplicates, or replace the implementation
-shape when contracts and behavior stay intact.
-
-Balance lines maintained with effort to understand the flow: nesting, branches,
-state held in mind, and jumps between helpers or files. Fewer lines help when
-they remove work or repetition; dense expressions that hide steps do not.
-
-Extract when a helper removes meaningful duplication, isolates a distinct job,
-or gives a useful name to logic the reader can then treat as one step. Keep
-straight-line steps together when splitting them adds names, parameters, and
-jumps without making the flow easier to follow. A one-line helper can earn its
-place through reuse or domain meaning; wrapping an obvious expression usually
-does not. Split by responsibility, never by line count. When both forms are
-equally clear, keep the one with fewer lines and moving parts. Prefer the
-smallest refactor that fully resolves the problem, not the smallest edit.
+Extract for meaningful reuse, a distinct responsibility or domain meaning.
+Keep clear straight-line flows together; inline obvious wrappers. Split by
+responsibility, not line count. At equal clarity, prefer fewer moving parts.
+Choose the smallest refactor that fully resolves the problem, not the smallest
+edit.
 
 **Always check**
 
@@ -111,17 +98,11 @@ smallest refactor that fully resolves the problem, not the smallest edit.
    commented-out blocks **this change** made dead. Grep real uses, including
    dynamic `import()` and string path lookups. Zero uses → delete. Public
    package export without proof → ask. Pre-existing dead outside scope → leave.
-7. **Tests in scope** — check that risky new branches, parsers, authorization,
-   and data writes have tests that fail when behavior breaks, including the
-   [hostile cases](testing.md#hostile-cases) that matter for them. Add focused
-   coverage where needed, not tests that mirror implementation or chase a
-   coverage number. Keep real behavior tests; delete mock-theater, empty, or
-   greenwash. Apply [Keep or drop](testing.md#keep-or-drop) to each test the
-   stage adds or changes: would a no-op implementation or wrong result still
-   pass, would a reworded label or another locale fail it, and does it split one
-   scenario across tests or fail only for breaks another test also catches?
-   Rewrite, merge, or delete the ones that fail a check. Assert outcomes through the consumer's interface. Do
-   not reshape prod to please a weak test.
+7. **Tests in scope** — read [testing.md](testing.md). Cover risky new branches,
+   parsers, authorization and writes with focused consumer-interface tests,
+   including relevant [hostile cases](testing.md#hostile-cases). Apply
+   [Keep or drop](testing.md#keep-or-drop) to every added or changed test;
+   rewrite, merge or delete failures. Do not reshape prod for weak tests.
 
 Before fixing or reporting a suspected defect, confirm the concrete input or
 situation, the path that reaches it, and the wrong result. Re-read the code and
@@ -145,16 +126,12 @@ stage and expected use.
   fits the stage and can be verified → replace it. Otherwise explain the
   replacement you would ship. Do not nibble.
 
-Tie-break: existing helper > inline > new helper. Moving code within the stage
-is allowed; unrelated edits are not.
+Tie-break: existing helper > inline > new helper.
 
 ## Stop
 
-Inspect the diff, its ownership boundaries, concrete reuse candidates, and the
-tests that prove the stage. Use targeted searches; do not scan unrelated code
-for hypothetical improvements. After checking behavior, safety, and expected
-load, if the structure fits and verification supports the stage, say so and
-stop. Do not refactor to prove the review was active.
+Use targeted searches. Stop when scoped behavior, safety, expected load,
+structure and checks support the stage. Do not refactor to prove activity.
 
 ## Verify
 
@@ -215,8 +192,5 @@ out of the reply. If something material could not be checked, add one
 
 ## Done
 
-The assessment states the quality conclusion and whether the structure warranted
-a broader refactor. Safely verifiable defects and avoidable production structure
-in scope are fixed, including problems that need a multi-file behavior-preserving
-refactor. Verification ran this turn, and every worthwhile improvement left
-outside the safe scope is a follow-up or decision with how to address it.
+Scoped safe defects and avoidable structure are fixed, verification ran this
+turn, and remaining improvements or decisions have a next action.

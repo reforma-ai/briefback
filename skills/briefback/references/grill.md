@@ -75,10 +75,8 @@ before this confirmation.
 - <durable decision> — <why; revisit if …>
 ```
 
-Add the reason and revisit condition only to a durable decision: one that will
-keep shaping work in other areas after this one ends. Other items stay one line.
-The grill writes no decision record. The plan's **Decisions** keep the line, and
-Document carries it into the page.
+Only durable decisions get a reason and revisit condition. Keep the line in
+the plan; Document carries it into the page.
 
 After confirmation, choose the next step. Do not ask which skill to run next.
 
