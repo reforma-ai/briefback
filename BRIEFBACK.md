@@ -93,7 +93,4 @@ Otherwise it writes into the human docs tree, or
 `.briefback/docs/<domain>/`, then removes the packaged
 `.briefback/<slug>/` working files.
 
-When the work leaves durable decisions and no Document step is planned, name
-them in the closing report and offer to record them.
-
 **Done when:** the domain page is current, or the step was skipped.

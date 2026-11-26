@@ -95,7 +95,7 @@ The handoff records what shipped, what remains, approaches tried and dropped, au
 
 When requested, the agent turns research, a plan, or shipped work into a durable project page. It updates an existing page for that domain when one exists; otherwise it writes to the project's docs tree or `.briefback/docs/<domain>/`. It then removes the packaged `.briefback/<slug>/` working files.
 
-Skip this step when the work does not need a page. Even then, if the work settled a decision that will shape other areas later, the agent names it when it finishes and offers to record it on the domain page, with the reason and when to revisit it. It writes nothing until you agree.
+Skip this step when the work does not need a page.
 
 ## Artifacts and fresh chats
 

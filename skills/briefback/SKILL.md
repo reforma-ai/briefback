@@ -100,9 +100,7 @@ when the user or project requires test-first work.
   anything skipped or deferred. A review's return keeps its own format.
 - A settled decision that will keep shaping work in other areas after this one
   ends is a durable decision: keep its reason and when to revisit it with the
-  decision. When the work ends with no Document step planned, name durable
-  decisions in the report and offer to record them (see Document). Write nothing
-  until the user agrees or asks for Document.
+  decision.
 - A stage that writes or changes tests follows
   [references/testing.md](references/testing.md), test-first or not. Tell any
   worker that writes tests to read it.
