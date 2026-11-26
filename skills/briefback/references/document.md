@@ -89,5 +89,6 @@ Print the page path and what was removed.
 
 A reader with that goal can finish without another page of the same type.
 The domain page is current. The packaged `.briefback/<slug>/` working files
-are gone. A page with no project docs tree lives under
+are gone, or kept because another chat or worker still uses the slug, and the
+output says so. A page with no project docs tree lives under
 `.briefback/docs/<domain>/`.

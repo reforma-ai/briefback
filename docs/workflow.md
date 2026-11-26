@@ -75,7 +75,7 @@ The agent keeps the plan current as the work changes.
 
 The agent loads relevant skills named in `AGENTS.md`. If implementation spills into a later stage, it updates the plan when one exists instead of quietly expanding the current one.
 
-The parent keeps `plan.md` current as tasks finish or scope changes. A stage becomes Complete after verification, review, and commit (or staging per project rules). When several chats work from one plan, each marks the stage it takes in the plan before starting.
+The parent keeps `plan.md` current as tasks finish or scope changes. A stage becomes Complete after verification, review, and commit (or staging per project rules). When several chats work from one plan, each marks the stage it takes in the plan before starting. Across separate checkouts, one owner assigns the stages.
 
 ### 5. Run an agent review
 

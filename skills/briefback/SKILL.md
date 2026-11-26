@@ -90,11 +90,12 @@ when the user or project requires test-first work.
   Complete after those checks and its separate commit (or staging per project
   rules), excluding unfinished changes from other stages.
 - Existing docs and old `.briefback/` notes are claims, not facts. Check what
-  the work depends on against code, config, or a command; when they disagree,
-  trust the code and tell the user if that changes the work. Mark a claim you
-  could not check as unverified; do not present it as true or discard it as
-  false. A check result holds only for the state it ran on: after later edits,
-  rerun it or call it stale.
+  the work depends on against code, config, or a command. A claim about what
+  exists loses to the code. A plan, settled decision, or requirement says what
+  should exist: code that lacks it is work to do, not a wrong note; tell the
+  user if that changes the work. Mark a claim you could not check as unverified;
+  do not present it as true or discard it as false. A check result holds only
+  for the state it ran on: after later edits, rerun it or call it stale.
 - Your closing report says what you ran and saw, what stayed unchecked, and
   anything skipped or deferred. A review's return keeps its own format.
 - A settled decision that will keep shaping work in other areas after this one
@@ -127,8 +128,10 @@ A worker writes only the files its assignment names. A shared file (the plan, a
 project page, an index) has one owner, usually the parent. Before editing a
 shared file, re-read it and change it in place, keeping other people's text; if
 it changed meanwhile, re-read and redo the edit. When several chats share one
-plan, re-read it and mark the stage you take (who or which branch) before
-starting; clear the mark at Complete.
+plan file, re-read it and mark the stage you take (who or which branch)
+before starting; clear the mark at Complete. The mark is visible only within
+one checkout: across worktrees or branches, the parent or the user assigns
+stages.
 
 Resolve routine blockers. Retry a stalled or failed worker once with the reason,
 then change the approach, reassign, or report it. Start newly ready work without
