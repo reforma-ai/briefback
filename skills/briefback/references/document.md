@@ -1,8 +1,7 @@
 # Document
 
-Write the human page from work already done in this chat. Distill. Do not copy
-`.briefback/` notes into the docs tree. After the page exists, remove the
-working files that were the source.
+Distill work already done into a human page. Do not copy `.briefback/` notes
+into the docs tree.
 
 UI strings and agent guides are out of scope.
 
@@ -25,6 +24,8 @@ file. Ten PRs on integrations are one integrations page.
 No page owns this domain → create one page in that tree, named for the
 domain. No human docs tree → write `.briefback/docs/<domain>/`. Do not
 create a repo-root `docs/`.
+
+Add the page to existing docs navigation when present.
 
 Read that page (or neighbors in the docs tree) for tone and terms.
 
@@ -55,7 +56,13 @@ first success, then links to the other three.
 
 ## 4. Write
 
-Ground claims in files you read. A path you cite exists, or mark it planned.
+Ground claims in files you read. Cite existing paths; mark planned paths or
+unbuilt items as such, or omit them.
+Verify changed claims against code; mark unchecked ones unverified in place.
+
+Carry forward durable decisions (what, why, when to revisit) under Decisions
+on the domain explanation page or in existing decision records.
+
 Lead with the thing the reader came for. Show commands, requests, and paths.
 Don't wait for outline approval unless the user asked for a structure, or the
 work is a multi-page set of **different jobs**. Redact secrets.
@@ -67,13 +74,11 @@ Write with the picked job's shape in
 
 Delete `.briefback/<slug>/` working files that were packaged (research, plan,
 handoff). Leave `.briefback/docs/`, `.briefback/config.json`, and other slugs.
-Nothing to delete when the source was only this chat.
+Nothing to delete when the source was only this chat. Keep the files while
+another chat or worker still uses the slug.
 
-Print the page path and what was removed.
+Print the page path and which working files were removed or kept.
 
 ## Done
 
-A reader with that goal can finish without another page of the same type.
-The domain page is current. The packaged `.briefback/<slug>/` working files
-are gone. A page with no project docs tree lives under
-`.briefback/docs/<domain>/`.
+The domain page is current, serves its reader's job, and cleanup follows step 5.

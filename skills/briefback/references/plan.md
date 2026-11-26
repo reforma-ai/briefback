@@ -26,7 +26,7 @@ An explicit Plan request still writes a plan. Do not implement.
 > Check a stage only after done-when, verification, review, and commit
 > (or staging per project rules).
 > Record scope changes before leaving the stage.
-> Record landed commits under the stage they implement.
+> Record landed commits and their checks under the stage they implement.
 
 **Goal:** one sentence
 **Approach:** 2–3 sentences — how the pieces fit
@@ -81,39 +81,30 @@ encodes. Not a file list.
 **Commits:** None yet.
 ```
 
-**Decisions** is the grill, durable. **This stage** is the briefing for one
-implementation and review boundary. Tasks are outcomes. **Files** are the map.
-
 Nested tasks are progress; a checked child does not complete the stage.
 
 ## Dependencies and delegation
 
 **Depends on** lists actual prerequisite stages or `None`, without cycles.
-Number prerequisites before their dependents. Make ownership and shared contracts
-clear through **Files** and tasks so independent stages can run concurrently.
-Within a complex stage, identify useful independent assignments and their combined
-verification. Keep tightly coupled work together; do not add stages or scaffolding
-merely to create parallel work. Execution follows the skill's shared rules.
+Number prerequisites before dependents. Expose independent stages; do not chain
+them by default. Define shared contracts and ownership in **Files** and tasks.
+Within a stage, identify useful
+parallel assignments and their combined verification. Keep tightly coupled work
+together; no extra stages or scaffolding just for parallelism.
 
 ## Keep current
 
-The coordinator updates the plan as workers report results: check completed
-tasks, reopen invalidated work, and revise remaining tasks and dependencies.
-Record each landed commit's hash and short description under its stage's
-**Commits**, including partial commits. Keep `None yet.` until a commit exists.
+Keep the plan current as workers report. Under **Commits**, record each landed
+or partial commit on one line: hash, summary, `checked:` commands and results
+(or `none`), plus `not checked:` for material gaps. Do not copy logs. Keep
+`None yet.` until a commit exists.
 
 ## Stage boundaries
 
-Each stage is the smallest coherent, reviewable implementation step with one
-clear outcome and a practical way to verify it. A stage is not necessarily a
-standalone pull request or independently deployable release. One real pull
-request may contain several stages.
-
-Dependencies determine stage order; they do not require each stage to be an
-independently deployable release. Do not add temporary mocks, adapters, feature
-paths, or scaffolding only to make an intermediate stage shippable. A completed
-stage leaves the repository internally consistent and passes verification
-relevant to its scope; the overall feature may still need later stages.
+Each stage has one coherent, verifiable outcome and leaves the repo internally
+consistent. It need not be independently shippable or a separate PR. Do not add
+temporary production mocks, adapters, paths or scaffolding just to ship an
+intermediate stage.
 
 ## Slicing
 
@@ -131,6 +122,8 @@ relevant to its scope; the overall feature may still need later stages.
   reliable implementation pass.
 - Task count is a warning that a stage may be too large, not an automatic reason
   to split it.
+- For risky repetitive work, verify and review one pilot before starting the
+  rest. Parallelize independent targets.
 
 ## Rules
 
@@ -138,8 +131,8 @@ relevant to its scope; the overall feature may still need later stages.
   `create`.
 - One approach. No menu, no TBD, no “handle edge cases”, no “similar to Stage n”.
 - **Decisions** is one bullet per confirmed grill answer: what we will do.
-  Discarded options stay out. **Out of scope** is the confirmed nos. Every
-  confirmed grill answer lands in one of those two lists.
+  Keep durable decisions with their reason and revisit condition. **Out of
+  scope** is the confirmed nos; discard other options.
 - **This stage** applies the decisions that bind this stage. An agent who never
   saw the grill should understand the job from **Decisions** plus this
   paragraph, the tasks, and the files.
@@ -152,22 +145,8 @@ relevant to its scope; the overall feature may still need later stages.
 
 ## Self-check
 
-1. Every confirmed grill answer is in **Decisions** or **Out of scope**,
-   and has a stage or is named out of scope.
-2. Every path exists, or `create` names the existing home it cannot join.
-3. A person can open Stage 1, read **Decisions** plus **This stage**, tasks, and
-   files, and complete it without this conversation.
-4. Each stage boundary makes implementation or review meaningfully clearer; no
-   stages are separate only because they touch different layers or many files.
-5. A stage that crosses areas keeps the cross-area work minor and tightly
-   coupled. Substantial areas with clear review boundaries stay separate.
-6. No stage adds temporary production code that a later stage removes only to
-   make the intermediate state independently shippable.
-7. Every stage leaves the repository internally consistent and passes its
-   scoped verification. It need not complete or independently ship the whole
-   feature.
-8. Dependencies name real prerequisites without cycles. Any concurrent work has
-   compatible ownership and contracts, and a way to verify its combined result.
+Check the rules above. Every confirmed answer maps to a stage or **Out of scope**.
+A new agent can complete each stage from the plan alone.
 
 ## Output
 

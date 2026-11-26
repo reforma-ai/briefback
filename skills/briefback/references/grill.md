@@ -72,8 +72,11 @@ before this confirmation.
 ```
 **Settled**
 - <confirmed answer>
-- <confirmed answer>
+- <durable decision> — <why; revisit if …>
 ```
+
+Only durable decisions get a reason and revisit condition. Keep the line in
+the plan; Document carries it into the page.
 
 After confirmation, choose the next step. Do not ask which skill to run next.
 

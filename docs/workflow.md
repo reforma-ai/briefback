@@ -24,17 +24,6 @@ Requests such as “Research authentication first,” “Review the changes,” 
 
 Use the loop for work larger than a quick fix. Skip research when the area is already understood. Plan is for work whose dependencies and progress need a durable artifact; obvious work can go from Grill straight to implementation. Settle decisions before implementation, then verify, review, and commit each stage before its dependents start.
 
-1. The agent learns how the area works, if needed.
-2. Grill sharpens the task with you.
-3. The agent plans stages when the sequence needs a durable artifact.
-4. The agent executes ready stages within the authorized scope.
-5. The agent reviews that stage, usually in a subagent.
-6. The agent checks the final diff and commits the stage.
-7. The agent saves a handoff when work moves to a fresh chat.
-8. The agent documents the result when requested.
-
-The agent repeats implementation, review, and commit until the authorized scope is complete. Independent work may overlap; each stage keeps its own checks and commit.
-
 > [!TIP]
 > Briefback keeps research, plans, handoffs, and local setup state under `.briefback/`.
 > Ignore the directory for a private workflow, commit artifacts when the team should share them, or remove working artifacts after the PR. Git and pull requests remain the record of shipped changes.
@@ -63,37 +52,33 @@ In a normal chat, Plan writes `.briefback/<slug>/plan.md`. In Native Plan mode, 
 
 The plan keeps the settled Grill decisions and divides the feature into coherent implementation stages. A stage has one clear outcome and a practical check; it is not a quota of files or lines, and it does not need to be an independently deployable release. One real pull request may contain several stages. Each stage records why it exists, its outcome, which files it expects to change, and its prerequisites in `Depends on`, so another agent can pick it up without replaying the Grill conversation.
 
-Dependencies expose independent work. A shared-contract stage might unblock parallel backend and frontend stages, followed by integration that depends on both. A complex stage can also contain independent assignments with a combined check.
+Dependencies expose independent work. A shared-contract stage might unblock parallel backend and frontend stages, followed by integration that depends on both. A complex stage can also contain independent assignments with a combined check. Risky repetitive work starts with one verified and reviewed pilot before the rest can run in parallel.
 
 Lower-level work often comes first: behavior-preserving refactoring, shared types, backend work, then the interface that uses them. That is a common sequence, not a template. Substantial backend and frontend changes normally stay in separate stages; a small, tightly coupled vertical change can stay together. Feature-local wiring should remain with the interface that first needs it.
 
-The agent keeps the plan current as the work changes.
-
 ### 4. Execute authorized stages
 
-“Implement it” covers the agreed plan unless you specify a narrower limit, such as “only Stage 1.” The agent selects ready stages and chooses direct, delegated, or parallel execution under the skill's rules. Without a plan, it uses the confirmed reading. Parallelism is optional; the parent remains responsible for integrating and checking each stage's result.
+“Implement it” covers the agreed plan unless you specify a narrower limit, such as “only Stage 1.” The agent selects ready stages and chooses direct, delegated, or parallel execution under the skill's rules. Without a plan, it uses the confirmed reading. Independent work runs concurrently when it saves time or context. The parent integrates and checks results and starts newly ready work without waiting for unrelated stages.
 
 The agent loads relevant skills named in `AGENTS.md`. If implementation spills into a later stage, it updates the plan when one exists instead of quietly expanding the current one.
 
-The parent keeps `plan.md` current as tasks finish or scope changes. A stage becomes Complete after verification, review, and commit (or staging per project rules).
+The parent keeps `plan.md` current as tasks finish or scope changes. A stage becomes Complete after verification, review, and commit (or staging per project rules). When several chats share a plan, one coordinator assigns the stages.
 
 ### 5. Run an agent review
 
 Review normally runs in a subagent with the context of what changed and why. If the client cannot launch one, the main agent reviews the stage. The reviewer fixes defects and makes behavior-preserving refactors when the structure needs them. That may include coordinated changes across several files. If the code is already well-shaped, the assessment says so instead of manufacturing a refactor. Concrete improvements outside the safe review scope return as follow-ups; product and contract calls return as decisions.
 
-Use a separate reviewer when subagents are available, coordinating fixes with any active workers.
-
 ### 6. Review and commit
 
-The parent commits each stage separately and records its commit hashes and short descriptions in the plan when present, including partial commits. Newly ready work can start without waiting for unrelated stages.
+The parent commits each stage separately and records each commit, its checks and material gaps on one line in the plan, when present. Newly ready work can start without waiting for unrelated stages.
 
 ### 7. Refresh the context
 
-The handoff records what shipped, what remains, authorized next work, and any active worker ownership. Attach it with the plan when present so the next chat can resume without duplicating assignments.
+The handoff records what shipped, what remains, approaches tried and dropped, authorized next work, and any active worker ownership. Attach it with the plan when present so the next chat can resume without duplicating assignments.
 
 ### 8. Archive or document the result
 
-When requested, the agent turns research, a plan, or shipped work into a durable project page. It updates an existing page for that domain when one exists; otherwise it writes to the project's docs tree or `.briefback/docs/<domain>/`. It then removes the packaged `.briefback/<slug>/` working files.
+When requested, the agent turns research, a plan, or shipped work into a durable project page. It updates an existing page for that domain when one exists; otherwise it writes to the project's docs tree or `.briefback/docs/<domain>/`. It removes the packaged `.briefback/<slug>/` working files when no other chat or worker still uses them.
 
 Skip this step when the work does not need a page.
 

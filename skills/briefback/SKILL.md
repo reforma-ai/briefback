@@ -22,17 +22,6 @@ Research → Grill → Plan → Stage → Review → Commit
                           └── Ready stages ─┘
 ```
 
-## Default behavior
-
-Do not wait for an explicit `/briefback` invocation. For any software change
-larger than a quick fix, load Briefback, identify the earliest necessary phase,
-and follow the loop from there. The task itself is enough to activate the skill.
-
-The user's words choose the mode; exact command syntax is optional. A request
-to “research this first” routes to Research, and “let's grill it” routes to
-Grill. Read only the selected reference before acting. Do not preload every
-mode.
-
 ## Modes
 
 | Mode | Use when | Read |
@@ -45,71 +34,67 @@ mode.
 | `handoff` | Unfinished work is moving to a fresh context | [references/handoff.md](references/handoff.md) |
 | `document` | Finished work should become durable project documentation | [references/document.md](references/document.md) |
 
-Accept `code-review` as an alias for `review`. Commands may include a target or
-brief in the same request, such as `$briefback research authentication` or
-`/briefback review the current diff`.
-
-`continue` and `implement` resume delivery rather than load another playbook.
-Read the current plan and latest handoff when present; otherwise use the
-confirmed reading in chat. Proceed through the agreed plan unless the user
-limits the scope, for example to Stage 1. Start unfinished stages with completed
-dependencies; preserve written order when dependencies are absent unless
-independence is established. Load [references/tdd.md](references/tdd.md) only
-when the user or project requires test-first work.
+Accept `code-review` as an alias for `review`. A request may include a target or brief.
 
 ## Routing
 
-- An explicit mode wins. Read its reference and follow it.
-- A clearly implied mode is equivalent to an explicit one. Do not ask the user
-  to repeat the request as a command.
-- A request to run the whole workflow starts at the earliest necessary phase.
-  Skip Research when the area is already understood. Skip Plan when the work is
-  obvious enough to hold in the conversation, including one or two compact
-  stages across multiple areas. Load later references only when their phase
-  begins.
-- With no mode or actionable request, inspect the conversation and existing
-  `.briefback/` artifacts, then recommend the next mode. Do not begin a
-  substantial phase merely because it might be useful.
-- If two modes genuinely fit and lead to different immediate work, ask one
-  short question. Otherwise choose the narrower mode.
+- An explicit or clearly implied mode wins. Read only its reference.
+- For substantial work, start at the earliest necessary phase without waiting
+  for invocation. Skip Research when the area is understood. Skip Plan when
+  one or two compact stages fit in chat, even across areas. Load later references
+  only when their phase begins.
+- `continue` and `implement` resume the current plan and latest handoff, or the
+  confirmed reading in chat. Proceed within authorized scope. Start unfinished
+  stages only when dependencies are complete. With no listed dependencies,
+  preserve written order unless independence is established. Read
+  [references/tdd.md](references/tdd.md) when test-first work is required.
+- Neither actionable request nor mode → inspect the conversation and `.briefback/`
+  artifacts, then recommend a mode without starting it.
+- If two modes fit and change the immediate work, ask one question; otherwise
+  choose the narrower mode.
 
 ## Shared rules
 
-- Follow the nearest project guide (`AGENTS.md` or equivalent).
-- Preserve the user's scope and authority. A mode changes the method, not what
-  actions are authorized.
-- Keep research, plans, and handoffs under one
-  `.briefback/<feature>/` slug so later phases can find them.
-- Keep an existing plan current throughout implementation: check off tasks as
-  their outcomes are completed, reopen or revise them when work changes, and
-  record landed commit hashes with a short description under the relevant stage.
-- Settle decisions before implementation. Use Plan only when sequencing, scope
-  tracking, or handoff needs a durable artifact. A stage is a verification,
-  review, and commit boundary, not necessarily a pull request or release. Mark
-  Complete after those checks and its separate commit (or staging per project
-  rules), excluding unfinished changes from other stages.
-- A stage that writes or changes tests follows
-  [references/testing.md](references/testing.md), test-first or not. Tell any
-  worker that writes tests to read it.
-- A phase may route to the next phase when its own completion rules say so.
-  Read the next reference at that point, not earlier.
+- Follow the nearest project guide and load relevant skills it names. A mode
+  does not expand the user's authorized scope.
+- Keep research, plans and handoffs under one `.briefback/<feature>/` slug.
+- Settle decisions before implementation. A stage is a verification, review and
+  commit boundary, not necessarily a release or PR. Verify and review each stage
+  before its separate commit (or staging per project rules), excluding unfinished
+  work from other stages. Only then mark Complete.
+- Keep the plan current: check off completed outcomes, reopen or revise changed
+  work, and record commit hashes, descriptions and checks under their stage.
+- Verify relevant claims about existing behavior in docs and old notes against
+  code, config or commands. Trust the code for current behavior; follow agreed
+  requirements for intended behavior. Tell the user if divergence changes the
+  work. Mark unchecked claims unverified. After edits, rerun affected checks or
+  mark them stale.
+- Closing report: outcome, check results and material gaps in a few lines. Do not
+  repeat the plan, worker reports or logs. Review uses its own format.
+- Keep durable decisions (those shaping other areas later), with why and when
+  to revisit them.
+- Read [references/testing.md](references/testing.md) before writing or changing
+  tests, test-first or not. Tell workers writing tests to do the same.
 
 ## Coordinate execution
 
-The parent owns scope, assignments, integration, plan updates, and commits.
-Choose direct work or subagents, sequentially or concurrently, when gains in
-speed, quality, or token use outweigh coordination costs. Follow mode-specific
-isolation rules; work directly when subagents are unavailable. Do not split work
-just to distribute it.
+The parent owns scope, assignments, integration, plan updates and commits.
+Prefer concurrent execution of ready independent work when it improves speed,
+quality or context use. Work directly when delegation adds overhead or is unavailable.
+Follow mode-specific isolation rules.
 
-Give workers the outcome, relevant decisions, owned changes, and checks; collect
-concise results and blockers without duplicating their work. Parallelize ready
-stages or independent tasks within a stage only with compatible edits and shared
-contracts. Separate concurrent writers' ownership or workspaces, and sequence
-overlapping edits, including review fixes. Integrate and verify a stage's combined
-result before review.
+Settle shared contracts before launching compatible stages or assignments
+together. Give workers a short brief: outcome, decisions, owned files and checks.
+Collect only results, changed paths, checks and blockers. Do not redo their work.
+While workers run, do independent work. As each stage's assignments finish,
+integrate, verify, review and commit that stage, then start newly ready work.
+Do not wait for unrelated workers.
 
-Resolve routine blockers or reassign stalled work. Start newly ready work without
-waiting for unrelated workers. Return scope or product decisions to the user
-while continuing unaffected authorized work; stop when that scope is complete
-or further progress needs user input.
+One writer per file; separate overlapping work into workspaces or sequence it,
+including review fixes. The parent owns shared files; reread before editing and
+preserve concurrent changes. One parent or user assigns stages across chats and
+worktrees. Workers edit only assigned files.
+
+Resolve recoverable blockers; otherwise change approach, reassign or report.
+Return scope or product decisions to the user while continuing unaffected work.
+Stop when authorized scope is complete or further progress needs user input.

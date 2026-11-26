@@ -1,96 +1,12 @@
 # Briefback
 
-Ordered loop for work larger than a quick fix. The `briefback` skill owns every
-step and loads only the reference for the current mode. This file sequences the
-modes and names artifact paths.
+For work larger than a quick fix, use the `briefback` skill. Follow its routing,
+mode references, and execution rules.
 
 ```text
 Research → Grill → Plan → Stage → Review → Commit
-                          ↑                     │
+                          ↑                   │
                           └──── Ready stages ───┘
 ```
 
-Skip Research when the area is already clear. Use Plan only when sequencing,
-scope tracking, or handoff needs a durable artifact. Obvious work that fits one
-or two compact stages skips Plan, even when it crosses backend and frontend;
-keep the confirmed reading in chat and offer implementation. Run Handoff only
-when unfinished work moves to a fresh context. Run Document when the work
-should become a project page.
-
-## 1. Research (optional)
-
-Explore the area before proposing the change. Run `briefback research` when
-findings must survive this chat. The investigation runs in a subagent.
-
-**Done when:** the agent can name what it will change, or the step was skipped
-because that is already known.
-
-Artifacts: `.briefback/<feature>/research/`.
-
-## 2. Grill
-
-Run `briefback grill`. Settle assumptions, scope, and how the result will be
-checked.
-
-**Done when:** the user confirmed the settled list and no open decision can
-change how the work will be done.
-
-## 3. Plan (larger work)
-
-Run `briefback plan` when the confirmed work needs durable coordination across
-several stages, non-obvious dependencies, or a likely context handoff. Compact,
-obvious work continues at step 4 without a plan file.
-
-**Done when:** `.briefback/<feature>/plan.md` exists with the settled list and
-unchecked stages with dependencies and work boundaries, or the plan was skipped
-because the confirmed scope is compact and clear in the conversation.
-
-## 4. Execute authorized stages
-
-Follow the skill's execution rules to select ready stages within the user's
-authorized scope and coordinate any subagents or parallel work. Without a plan,
-use the confirmed reading and keep the work reviewable. Load project craft
-skills named in `AGENTS.md`. Run `briefback tdd` for test-first work.
-
-**Done when:** each implemented stage meets its verification checks and is ready
-for review.
-
-## 5. Review
-
-Run `briefback review` on the completed stage. The review runs in a subagent
-with what changed and why. It fixes defects and performs behavior-preserving
-refactors across the affected stage, including multi-file changes. Anything
-left unfixed needs a product decision, contract change, unrelated subsystem, or
-cannot be verified safely.
-
-**Done when:** avoidable production structure is gone, defects are fixed, and
-every unfixed problem is in front of the user with how to fix it.
-
-## 6. Commit
-
-Commit each verified and reviewed stage separately through the project's normal
-workflow. Record its commit hashes and short descriptions in the plan when
-present, including partial commits, then mark Complete. Return to step 4 for
-newly ready work within the authorized scope.
-
-**Done when:** the stage is committed (or staged per project rules), landed
-commits and completion are recorded in the plan when present, and remaining
-authorized work is identified or complete.
-
-## 7. Handoff (fresh context)
-
-Run `briefback handoff` before moving unfinished work to another chat. Attach
-the plan when present and the handoff there, then resume at step 4.
-
-**Done when:** `.briefback/<feature>/handoff.md` exists, or the current chat
-continues without a context move.
-
-## 8. Archive / document (optional)
-
-Run `briefback document` when research, a plan, or a shipped change should
-become a project page. It updates the existing domain page when one exists.
-Otherwise it writes into the human docs tree, or
-`.briefback/docs/<domain>/`, then removes the packaged
-`.briefback/<slug>/` working files.
-
-**Done when:** the domain page is current, or the step was skipped.
+Use Handoff when unfinished work moves to a fresh chat and Document for durable project pages.
