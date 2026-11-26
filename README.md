@@ -105,6 +105,32 @@ for unfamiliar areas; a written plan coordinates work across stages or chats.
 [Prosecraft](https://github.com/reforma-ai/prosecraft) provides skills for
 humanizing drafts, writing documentation and UI copy, and creating agent skills.
 
+## 🙏 Credits
+
+Briefback builds on other people's work. Where its text follows or adapts a
+source, the source is named here.
+
+- **[Matt Pocock's skills](https://github.com/mattpocock/skills)** (MIT). Grill
+  follows his `grilling` skill: the design tree, rounds of questions with a
+  recommended answer, and an ending when no open branch is left. The test-first
+  guidance in `tdd`, `testing`, and `mocking` adapts parts of his `tdd` skill.
+  His notice is in [LICENSE](LICENSE).
+- **[Superpowers](https://github.com/obra/superpowers)** by Jesse Vincent (MIT).
+  The Review rule that no pass or done claim stands without a command you ran
+  this turn echoes its `verification-before-completion` skill.
+- **[Diátaxis](https://diataxis.fr/)** by Daniele Procida. Document writes one
+  page per job: tutorial, how-to, reference, or explanation.
+- **Anthropic.** The rules for parallel work and checks draw on
+  [dynamic workflows in Claude Code](https://www.claude.com/blog/introducing-dynamic-workflows-in-claude-code)
+  and its [documentation](https://code.claude.com/docs/en/workflows) (the
+  unverified outcome and the pilot target),
+  [Building a C compiler with a team of parallel Claudes](https://www.anthropic.com/research/building-c-compiler)
+  (claiming work in shared files),
+  [Harness design for long-running application development](https://www.anthropic.com/research/harness-design-long-running-apps)
+  (agreeing on done before the work starts), and
+  [How the Claude Code team thinks about verification](https://claude.dev/blog/how-the-claude-code-team-thinks-about-verification)
+  (recording how each change was checked).
+
 ## 📄 License
 
 Briefback is available under the [MIT License](LICENSE).
