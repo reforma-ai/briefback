@@ -20,9 +20,14 @@ explicit user constraints and required approvals still apply.
 
 Start by restating the task, the decisions already implied by the request, and
 any assumptions you would otherwise make. If there are no open questions, ask
-the user to confirm this reading.
+for confirmation only in interactive mode.
 
-Work the tree in **rounds**. The **frontier** is every decision whose prerequisites are already settled. Ask the whole frontier in one round as ordinary chat text: number each question and give your recommended answer. Then wait. Do not also invoke a host questionnaire, picker, or any extra tool that re-asks the same questions — hosts differ, and that second channel duplicates the round.
+Work the tree in **rounds**. The **frontier** is every decision whose
+prerequisites are already settled.
+
+In interactive mode, ask the whole frontier in one round as ordinary chat text:
+number each question and give your recommended answer. Then wait. Do not repeat
+the round through a host questionnaire or picker. Use this format:
 
 ```
 ❓ **Q1** - **<title>**
@@ -61,7 +66,7 @@ Each round of answers reshapes the tree. Recompute the frontier. A question that
 Finding _facts_ is your job. When a frontier question needs something from the
 repo, look it up — don't ask the user for anything you can read. Follow the
 nearest project guide (`AGENTS.md` or equivalent). A running lookup is an
-unsettled prerequisite: ask the rest of the frontier now.
+unsettled prerequisite: address the rest of the frontier now.
 
 In interactive mode, the _decisions_ are the user's. Put each to them and wait.
 
