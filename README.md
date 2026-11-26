@@ -35,8 +35,8 @@ without you naming it. For example:
 
 > Research how authentication works in this project.
 
-The agent chooses the relevant mode from your request. For a change, it
-checks the repo, recommends answers to open questions, and waits for you to
+The agent chooses the relevant mode from your request. For a change in interactive
+mode, it checks the repo, recommends answers to open questions, and waits for you to
 confirm what to build. There are no mode commands to memorize.
 
 [Other installation options and updates](docs/installation.md)
@@ -68,11 +68,11 @@ The agent implements and checks the agreed change, then reviews it.
 ## What the skill adds
 
 A good prompt can ask for questions too. Briefback makes that discipline
-reusable across tasks: inspect the code, recommend answers, wait for agreement,
-then build and review the confirmed change.
+reusable across tasks: inspect the code, settle decisions, then build and
+review. Interactive mode asks you; autonomous mode resolves open questions.
 
 - **Decisions stay yours.** The agent looks up facts and challenges assumptions;
-  you settle product and design choices.
+  you settle product and design choices or delegate them in autonomous mode.
 - **Scope stays reviewable.** Each coherent stage is verified, reviewed, and
   committed separately. Independent work can run in parallel within your agreed
   scope. Plans and handoffs preserve context across stages or chats.
@@ -87,7 +87,7 @@ Research → Grill → Plan → Stage → Review → Commit
                           └── Ready stages ─┘
 ```
 
-Grill is where you settle decisions with the agent. Each stage is implemented,
+Grill settles decisions before implementation. Each stage is implemented,
 checked, reviewed, and committed before its dependent stages start. Research is
 for unfamiliar areas; a written plan coordinates work across stages or chats.
 

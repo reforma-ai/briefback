@@ -44,14 +44,14 @@ Accept `code-review` as an alias for `review`. A request may include a target or
   one or two compact stages fit in chat, even across areas. Load later references
   only when their phase begins.
 - `continue` and `implement` resume the current plan and latest handoff, or the
-  confirmed reading in chat. Proceed within authorized scope. Start unfinished
+  settled reading in chat. Proceed within authorized scope. Start unfinished
   stages only when dependencies are complete. With no listed dependencies,
   preserve written order unless independence is established. Read
   [references/tdd.md](references/tdd.md) when test-first work is required.
 - Neither actionable request nor mode → inspect the conversation and `.briefback/`
   artifacts, then recommend a mode without starting it.
-- If two modes fit and change the immediate work, ask one question; otherwise
-  choose the narrower mode.
+- If two modes fit and change the immediate work, ask one question in interactive
+  mode; otherwise choose the narrower mode.
 
 ## Shared rules
 
@@ -96,5 +96,6 @@ preserve concurrent changes. One parent or user assigns stages across chats and
 worktrees. Workers edit only assigned files.
 
 Resolve recoverable blockers; otherwise change approach, reassign or report.
-Return scope or product decisions to the user while continuing unaffected work.
+Settle new decisions through Grill; return those beyond your authority to the
+user. Continue unaffected work.
 Stop when authorized scope is complete or further progress needs user input.
